@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { z } from "zod";
+import { string, z } from "zod";
 import type { FormSubmitEvent } from "#ui/types";
 import { ref, reactive } from 'vue';
+
+definePageMeta({
+  middleware: ['logged']
+});
 
 const supabase = useSupabaseClient();
 
@@ -13,8 +17,8 @@ const schema = z.object({
 type Schema = z.output<typeof schema>;
 
 const state = reactive({
-  email: undefined,
-  password: undefined,
+  email:'',
+  password:'',
 });
 
 const isLoading = ref(false);
@@ -25,11 +29,10 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   isLoading.value = true;
   
   const { data, error } = await supabase.auth.signInWithPassword({
-    email: state.email,
+    email: state.email ,
     password: state.password
   });
   
-  console.log(state);
   
   isLoading.value = false;
 

@@ -3,6 +3,10 @@ import { z } from "zod";
 import type { FormSubmitEvent } from "#ui/types";
 import { ref, reactive } from 'vue';
 
+definePageMeta({
+  middleware: ['logged']
+});
+
 const supabase = useSupabaseClient();
 
 const schema = z.object({
@@ -13,8 +17,8 @@ const schema = z.object({
 type Schema = z.output<typeof schema>;
 
 const state = reactive({
-  email: undefined,
-  password: undefined,
+  email: '',
+  password: '',
 });
 
 const isLoading = ref(false);
@@ -29,7 +33,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     password: state.password
   });
   
-  console.log(state);
   
   isLoading.value = false;
 
