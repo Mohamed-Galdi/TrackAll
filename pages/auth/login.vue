@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { string, z } from "zod";
+import { z } from "zod";
 import type { FormSubmitEvent } from "#ui/types";
 import { ref, reactive } from 'vue';
 
