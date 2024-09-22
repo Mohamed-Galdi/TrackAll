@@ -63,6 +63,19 @@
     
 }
 
+/* Force light mode styles */
+:root {
+    color-scheme: light;
+}
+
+/* Override any dark mode styles */
+.dark,
+[data-theme="dark"] {
+    color-scheme: light !important;
+    /* Add any other overrides needed */
+}
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
