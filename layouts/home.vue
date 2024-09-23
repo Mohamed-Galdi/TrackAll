@@ -9,11 +9,13 @@
       <nav
         class="flex justify-between py-2 items-center mx-auto max-w-screen-xl"
       >
-        <img
-          src="~/assets/logos/dark_trans.png"
-          alt="track all logo"
-          class="max-w-[80px]"
-        />
+        <NuxtLink to="/">
+          <img
+            src="~/assets/logos/dark_trans.png"
+            alt="track all logo"
+            class="max-w-[80px]"
+          />
+        </NuxtLink >
         <div class="flex justify-center items-center gap-4">
           <NuxtLink
             to="/auth/login"
