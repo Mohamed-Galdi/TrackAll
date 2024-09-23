@@ -3,6 +3,8 @@ definePageMeta({
   layout: "home",
 });
 
+import githubGif from "~/assets/showcase/github.gif";
+
 const { overviewImage } = useImageTransform();
 </script>
 
@@ -14,11 +16,15 @@ const { overviewImage } = useImageTransform();
     <div
       class="mx-auto max-w-screen-xl flex flex-col justify-center items-center pt-24"
     >
-      <h1 class="text-6xl font-bold text-center capitalize text-slate-700">
+      <h1
+        class="lg:text-6xl md:text-5xl text-4xl font-bold text-center capitalize text-slate-700"
+      >
         Never Lose Track <br />
         Of <span class="text-indigo-500">Your Projects</span> Again
       </h1>
-      <h2 class="mt-8 text-2xl font-synonym text-center capitalize">
+      <h2
+        class="mt-8 lg:text-2xl md:text-xl text-lg font-synonym text-center capitalize md:px-0 px-4"
+      >
         Track all your projects in one place, easily, effectively,
         <span class="relative"
           >and for free
@@ -30,14 +36,16 @@ const { overviewImage } = useImageTransform();
           />
         </span>
       </h2>
-      <div class="flex gap-8 mt-12 justify-center uppercase">
+      <div
+        class="flex lg:flex-row flex-col gap-8 mt-12 justify-center items-center uppercase w-full mb-12 sm:mb-0"
+      >
         <!-- Link to dashboard -->
-        <UButton size="xl" class="uppercase" block>Get Started</UButton>
-        <!-- Link to demo login -->
-        <UButton color="white" class="uppercase font-bold" block>Try Demo</UButton>
+        <BtnMain link="/" class="lg:w-72 w-[80%]">Home</BtnMain>
 
+        <!-- Link to demo login -->
+        <BtnSecond link="/auth/login" class="lg:w-72 w-[80%] ">Try Demo</BtnSecond>
       </div>
-      <div class="my-12 flex justify-center test">
+      <div class="my-12 flex justify-center test lg:px-0 px-4">
         <img
           src="~/assets/test.png"
           alt="overview"
@@ -82,58 +90,91 @@ const { overviewImage } = useImageTransform();
     <div>
       <ShowCaseCart
         direction="ltr"
-        title="Title"
+        title="Title 1"
         description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vitae libero ea fuga fugit neque, itaque voluptatibus dicta ipsam veritatis. Ad vitae blanditiis maiores! Distinctio!"
-        image="./assets/showcase/github.gif"
-        cta="Start Tracking"
-        link="https://github.com/TrackAll/trackall"
+        :image="githubGif"
       />
       <ShowCaseCart
         direction="rtl"
-        title="Title"
+        title="Title 2"
         description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vitae libero ea fuga fugit neque, itaque voluptatibus dicta ipsam veritatis. Ad vitae blanditiis maiores! Distinctio!"
-        image="~/assets/showcase/github.gif"
-        link="https://github.com/TrackAll/trackall"
+        :image="githubGif"
       />
       <ShowCaseCart
         direction="ltr"
-        title="Title"
+        title="Title 3"
         description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vitae libero ea fuga fugit neque, itaque voluptatibus dicta ipsam veritatis. Ad vitae blanditiis maiores! Distinctio!"
-        image="~/assets/showcase/github.gif"
-        link="https://github.com/TrackAll/trackall"
+        :image="githubGif"
+      />
+    </div>
+  </div>
+
+  <!-- Twitter Testimonials Section -->
+  <div class="mx-auto max-w-screen-xl py-8 px-10 space-y-12">
+    <h2 class="text-center mt-8 text-pr-700 capitalize font-bold">
+      What People Say
+    </h2>
+    <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 place-items-center py-4 lg:px-0 px-8 gap-4">
+      <img
+        src="~/assets/tweets/tweet1.png"
+        alt="testimonial"
+        class="w-full h-full object-cover border-2 border-gray-900 rounded-xl overflow-hidden shadow-sm shadow-blue-400 md:-rotate-6 rotate-6 hover:scale-[1.05] hover:rotate-0 hover:shadow-xl hover:shadow-blue-300 hover:z-50 cursor-pointer transition-all duration-300 ease-in-out"
+      />
+      <img
+        src="~/assets/tweets/tweet2.png"
+        alt="testimonial"
+        class="w-full h-full object-cover border-2 border-gray-900 rounded-xl overflow-hidden shadow-md shadow-blue-400 -rotate-2 hover:scale-[1.05] hover:rotate-0 hover:shadow-xl hover:shadow-blue-300 hover:z-50 cursor-pointer transition-all duration-300 ease-in-out"
+      />
+      <img
+        src="~/assets/tweets/tweet3.png"
+        alt="testimonial"
+        class="w-full h-full object-cover border-2 border-gray-900 rounded-xl overflow-hidden shadow-md shadow-blue-400 rotate-6 hover:scale-[1.05] hover:rotate-0 hover:shadow-xl hover:shadow-blue-300 hover:z-50 cursor-pointer transition-all duration-300 ease-in-out"
+      />
+      <img
+        src="~/assets/tweets/tweet4.png"
+        alt="testimonial"
+        class="w-full h-full object-cover border-2 border-gray-900 rounded-xl overflow-hidden shadow-md shadow-blue-400 rotate-6 hover:scale-[1.05] hover:rotate-0 hover:shadow-xl hover:shadow-blue-300 hover:z-50 cursor-pointer transition-all duration-300 ease-in-out"
+      />
+      <img
+        src="~/assets/tweets/tweet5.png"
+        alt="testimonial"
+        class="w-full h-full object-cover border-2 border-gray-900 rounded-xl overflow-hidden shadow-md shadow-blue-400 rotate-2 hover:scale-[1.05] hover:rotate-0 hover:shadow-xl hover:shadow-blue-300 hover:z-50 cursor-pointer transition-all duration-300 ease-in-out"
+      />
+      <img
+        src="~/assets/tweets/tweet6.png"
+        alt="testimonial"
+        class="w-full h-full object-cover border-2 border-gray-900 rounded-xl overflow-hidden shadow-md shadow-blue-400 -rotate-6 hover:scale-[1.05] hover:rotate-0 hover:shadow-xl hover:shadow-blue-300 hover:z-50 cursor-pointer transition-all duration-300 ease-in-out"
       />
     </div>
   </div>
 
   <!-- Github Section -->
-  <div
-    class="mx-auto max-w-screen-xl py-8 px-10 font-amulya grid place-items-center"
-  >
+  <div class="mx-auto max-w-screen-xl py-8 px-10 mt-8 font-amulya">
     <div
-      class="w-fit bg-gradient-to-tr from-slate-600 to-gray-800 rounded-xl h-fit flex justify-center items-center gap-24 px-16 py-6"
+      class="bg-gradient-to-tr from-slate-600 to-gray-800 rounded-xl h-fit flex md:flex-row flex-col justify-center items-center md:gap-24 gap-2 md:px-16 px-8 py-6"
     >
-      <div class="w-2/3 space-y-2">
-        <h3 class="text-2xl font-bold font-synonym text-gray-100 text-nowrap">
+      <div class="md:w-2/3 w-full space-y-2 md:order-1 order-last ">
+        <h3 class="md:text-2xl text-lg font-bold font-synonym text-gray-100 md:text-start text-center ">
           Open Source: Make It Your Own
         </h3>
-        <p class="text-gray-300 text-justify text-nowrap">
+        <p class="text-gray-300 md:text-start text-center line-clamp-2">
           Explore the code, host your own version, and don’t forget to give it a
           star ⭐.
         </p>
         <a
           href="https://github.com/Mohamed-Galdi/TrackAll"
           target="_blank"
-          class="bg-slate-900 text-slate-200 py-2 px-4 rounded-xl w-fit border-slate-200 border-2 flex justify-center items-center gap-2 hover:bg-indigo-600 transition-all duration-300 ease-in-out"
+          class="bg-slate-900 text-slate-200 py-2 px-4 md:mx-0 mx-auto rounded-xl w-fit border-slate-200 border-2 flex justify-center items-center gap-2 hover:bg-indigo-600 transition-all duration-300 ease-in-out"
         >
           <p>Github Repo</p>
           <IconsTarget class="h-5 w-5" />
         </a>
       </div>
-      <div class="w-1/3 flex justify-center items-center">
+      <div class="md:w-1/3 w-full flex justify-center items-center md:order-last order-1">
         <img
           src="~/assets/github.png"
           alt="github"
-          class="w-40 h-40 object-cover invert"
+          class="md:w-40 md:h-40 w-24 h-24 object-cover invert"
         />
       </div>
     </div>

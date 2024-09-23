@@ -2,10 +2,9 @@
 
 <template>
   <div class="pt-16">
-    <!-- Add padding-top to account for fixed navbar -->
     <div
       id="header"
-      class="fixed h-16 top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/60"
+      class="fixed h-16 top-0 left-0 right-0 backdrop-blur-md bg-white/60 px-4 z-[9999]"
     >
       <nav
         class="flex justify-between py-2 items-center mx-auto max-w-screen-xl"
@@ -39,9 +38,9 @@
       class="w-full bg-gradient-to-t from-blue-200 to-white pb-4"
     >
       <div
-        class="mx-auto max-w-screen-xl py-8 px-10 font-amulya flex justify-between items-center text-center"
+        class="mx-auto max-w-screen-xl py-8 px-10 font-amulya flex md:flex-row flex-col justify-between items-center text-center md:gap-0 gap-3"
       >
-        <div class="w-1/3 flex justify-center items-center gap-4">
+        <div class="md:w-1/3 w-full  flex justify-center items-center gap-4  order-2  md:order-1">
           <a href="https://github.com/Mohamed-Galdi" target="_blank">
             <IconsGithub
               class="w-8 h-8 text-slate-800 hover:text-indigo-500 transition-all duration-300 ease-in-out"
@@ -58,12 +57,14 @@
             />
           </a>
         </div>
-        <div class="w-1/3 text-center">
+
+        <div class="md:w-1/3 w-full  text-center  order-1 md:order-2">
           <p class="font-synonym">
             Made by <a href="https://www.galdi.dev/" target="_blank" class="text-slate-800 font-bold">M-Galdi</a>
           </p>
         </div>
-        <div class="w-1/3 flex justify-center items-center gap-4">
+
+        <div class="md:w-1/3 w-full  flex justify-center items-center gap-4 order-3 md:order-3">
           <NuxtLink
             to="/privacy-policy"
             class="text-sm text-slate-600 underline underline-offset-4 hover:text-slate-900"
@@ -77,6 +78,7 @@
             Terms of Service
           </NuxtLink>
         </div>
+
       </div>
     </div>
   </div>
