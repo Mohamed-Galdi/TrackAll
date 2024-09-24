@@ -3,12 +3,27 @@ definePageMeta({
   layout: "home",
 });
 
-import githubGif from "~/assets/showcase/github.gif";
+const type = ref("getStarted");
 
+import githubGif from "~/assets/showcase/github.gif";
 const { overviewImage } = useImageTransform();
+
+const isAuthOpen = ref(false);
+function openAuthModal(authType) {
+  
+  type.value = authType; // Set the type to 'login' or 'register'
+  isAuthOpen.value = true;
+}
+
 </script>
 
 <template>
+  <!-- Auth Modal -->
+   <UModal v-model="isAuthOpen">
+    <div class="p-4 bg-white rounded-lg">
+      <AuthModal :type="type" />
+    </div>
+  </UModal>
   <!-- Header Section -->
   <div
     class="bg-slate-100 text-dark font-amulya bg-[linear-gradient(to_right,#5968ee15_1px,transparent_1px),linear-gradient(to_bottom,#5968ee15_1px,transparent_1px)] bg-[size:24px_24px]"
@@ -40,8 +55,7 @@ const { overviewImage } = useImageTransform();
         class="flex lg:flex-row flex-col gap-8 mt-12 justify-center items-center uppercase w-full mb-12 sm:mb-0"
       >
         <!-- Link to dashboard -->
-        <BtnMain link="/" class="lg:w-72 w-[80%]">Home</BtnMain>
-
+        <BtnMain link="/" class="lg:w-72 w-[80%]" @click="openAuthModal('getStarted')">Get Started</BtnMain>
         <!-- Link to demo login -->
         <BtnSecond link="/auth/login" class="lg:w-72 w-[80%] ">Try Demo</BtnSecond>
       </div>

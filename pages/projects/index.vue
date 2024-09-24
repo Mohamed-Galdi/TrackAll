@@ -7,6 +7,7 @@ const router = useRouter();
 
 definePageMeta({
   middleware: ["auth"],
+  layout: "dashboard",
 });
 
 const projects = ref([]);
@@ -36,7 +37,7 @@ async function logout() {
   if (logoutError) {
     console.error("Logout error:", logoutError.message);
   } else {
-    router.push("/login");
+    router.push("/");
   }
 }
 
@@ -68,7 +69,7 @@ const deleteProject = async (projectId) => {
 </script>
 
 <template>
-  <div class="container mx-auto mt-8">
+  <div class="container mx-auto py-6">
     <h1 class="text-center text-5xl mb-8">Projects</h1>
     <div class="text-center">
       <UButton color="black" variant="solid" @click="navigateTo('/projects/create')">Add New</UButton>
