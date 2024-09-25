@@ -1,3 +1,5 @@
+import Aura from '@primevue/themes/aura';
+
 export default defineNuxtConfig({
   colorMode: {
     preference: 'light',
@@ -7,7 +9,16 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
-  modules: ['@nuxtjs/supabase', "@nuxt/ui"],
+  modules: ['@nuxtjs/supabase', "@nuxt/ui",  '@primevue/nuxt-module'],
+
+  primevue: {
+        options: {
+            theme: {
+                preset: Aura
+            }
+        }
+    },
+
   supabase: {
     redirect: false,
   },

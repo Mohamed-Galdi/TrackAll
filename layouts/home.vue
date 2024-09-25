@@ -1,4 +1,6 @@
 <script setup>
+import Toast from 'primevue/toast';
+
 const isAuthOpen = ref(false);
 const type = ref("login"); // Default to 'login'
 
@@ -11,6 +13,7 @@ const user = useSupabaseUser(); // Get the current user
 </script>
 
 <template>
+  <Toast />
   <UModal v-model="isAuthOpen">
     <div class="p-4 bg-white rounded-lg">
       <AuthModal :type="type" />
@@ -20,7 +23,7 @@ const user = useSupabaseUser(); // Get the current user
   <div class="pt-16">
     <div
       id="header"
-      class="fixed h-16 top-0 left-0 right-0 backdrop-blur-md bg-white/60 px-4 z-[9999]"
+      class="fixed h-16 top-0 left-0 right-0 backdrop-blur-md bg-white/60 px-4 z-20"
     >
       <nav
         class="flex justify-between py-2 items-center mx-auto max-w-screen-xl"

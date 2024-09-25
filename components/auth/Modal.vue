@@ -28,7 +28,7 @@ watch(() => props.type, (newType) => {
       </p>
     </component>
 
-    <component :is="localType" v-else>
+    <component :is="localType" v-else-if="type === 'register'">
       <AuthRegister />
       <p class="mt-4">Already have an account? 
         <span 
@@ -38,6 +38,10 @@ watch(() => props.type, (newType) => {
           Login
         </span>
       </p>
+    </component>
+    
+    <component :is="localType" v-else-if="type === 'demo'">
+      <AuthDemo />
     </component>
   </div>
 </template>

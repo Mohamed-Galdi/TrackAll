@@ -1,25 +1,36 @@
 <script setup>
+import githubGif from "~/assets/showcase/github.gif";
+
 definePageMeta({
   layout: "home",
 });
 
-const type = ref("getStarted");
-
-import githubGif from "~/assets/showcase/github.gif";
 const { overviewImage } = useImageTransform();
 
+const type = ref("getStarted");
+
 const isAuthOpen = ref(false);
+
+const router = useRouter();
+const user = useSupabaseUser(); // Get the current user state from Supabase
+
+
 function openAuthModal(authType) {
-  
-  type.value = authType; // Set the type to 'login' or 'register'
-  isAuthOpen.value = true;
+  if (user.value) {
+    // If user is logged in, navigate to /projects
+    router.push('/projects');
+  } else {
+    // If not logged in, open the auth modal
+    type.value = authType; // Set auth type (login or register)
+    isAuthOpen.value = true; // Open the modal
+  }
 }
 
 </script>
 
 <template>
   <!-- Auth Modal -->
-   <UModal v-model="isAuthOpen">
+  <UModal v-model="isAuthOpen">
     <div class="p-4 bg-white rounded-lg">
       <AuthModal :type="type" />
     </div>
@@ -51,14 +62,22 @@ function openAuthModal(authType) {
           />
         </span>
       </h2>
+
       <div
         class="flex lg:flex-row flex-col gap-8 mt-12 justify-center items-center uppercase w-full mb-12 sm:mb-0"
       >
         <!-- Link to dashboard -->
-        <BtnMain link="/" class="lg:w-72 w-[80%]" @click="openAuthModal('getStarted')">Get Started</BtnMain>
+        <BtnMain
+          class="lg:w-72 w-[80%]"
+          @click="openAuthModal('login')"
+          >Get Started</BtnMain
+        >
         <!-- Link to demo login -->
-        <BtnSecond link="/auth/login" class="lg:w-72 w-[80%] ">Try Demo</BtnSecond>
+        <BtnSecond class="lg:w-72 w-[80%]" @click="openAuthModal('demo')"
+          >Try Demo</BtnSecond
+        >
       </div>
+
       <div class="my-12 flex justify-center test lg:px-0 px-4">
         <img
           src="~/assets/test.png"
@@ -95,7 +114,6 @@ function openAuthModal(authType) {
       </svg>
     </div>
   </div>
-
   <!-- Showcase Section -->
   <div class="mx-auto max-w-screen-xl py-8 font-amulya">
     <h2 class="text-center mt-8 text-pr-700 capitalize font-bold">
@@ -128,36 +146,38 @@ function openAuthModal(authType) {
     <h2 class="text-center mt-8 text-pr-700 capitalize font-bold">
       What People Say
     </h2>
-    <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 place-items-center py-4 lg:px-0 px-8 gap-4">
+    <div
+      class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 place-items-center py-4 lg:px-0 px-8 gap-4"
+    >
       <img
         src="~/assets/tweets/tweet1.png"
         alt="testimonial"
-        class="w-full h-full object-cover border-2 border-gray-900 rounded-xl overflow-hidden shadow-sm shadow-blue-400 md:-rotate-6 rotate-6 hover:scale-[1.05] hover:rotate-0 hover:shadow-xl hover:shadow-blue-300 hover:z-50 cursor-pointer transition-all duration-300 ease-in-out"
+        class="w-full h-full object-cover border-2 border-gray-900 rounded-xl overflow-hidden shadow-sm shadow-blue-400 md:-rotate-6 rotate-6 hover:scale-[1.05] hover:rotate-0 hover:shadow-xl hover:shadow-blue-300 hover:z-10 cursor-pointer transition-all duration-300 ease-in-out"
       />
       <img
         src="~/assets/tweets/tweet2.png"
         alt="testimonial"
-        class="w-full h-full object-cover border-2 border-gray-900 rounded-xl overflow-hidden shadow-md shadow-blue-400 -rotate-2 hover:scale-[1.05] hover:rotate-0 hover:shadow-xl hover:shadow-blue-300 hover:z-50 cursor-pointer transition-all duration-300 ease-in-out"
+        class="w-full h-full object-cover border-2 border-gray-900 rounded-xl overflow-hidden shadow-md shadow-blue-400 -rotate-2 hover:scale-[1.05] hover:rotate-0 hover:shadow-xl hover:shadow-blue-300 hover:z-10 cursor-pointer transition-all duration-300 ease-in-out"
       />
       <img
         src="~/assets/tweets/tweet3.png"
         alt="testimonial"
-        class="w-full h-full object-cover border-2 border-gray-900 rounded-xl overflow-hidden shadow-md shadow-blue-400 rotate-6 hover:scale-[1.05] hover:rotate-0 hover:shadow-xl hover:shadow-blue-300 hover:z-50 cursor-pointer transition-all duration-300 ease-in-out"
+        class="w-full h-full object-cover border-2 border-gray-900 rounded-xl overflow-hidden shadow-md shadow-blue-400 rotate-6 hover:scale-[1.05] hover:rotate-0 hover:shadow-xl hover:shadow-blue-300 hover:z-10 cursor-pointer transition-all duration-300 ease-in-out"
       />
       <img
         src="~/assets/tweets/tweet4.png"
         alt="testimonial"
-        class="w-full h-full object-cover border-2 border-gray-900 rounded-xl overflow-hidden shadow-md shadow-blue-400 rotate-6 hover:scale-[1.05] hover:rotate-0 hover:shadow-xl hover:shadow-blue-300 hover:z-50 cursor-pointer transition-all duration-300 ease-in-out"
+        class="w-full h-full object-cover border-2 border-gray-900 rounded-xl overflow-hidden shadow-md shadow-blue-400 rotate-6 hover:scale-[1.05] hover:rotate-0 hover:shadow-xl hover:shadow-blue-300 hover:z-10 cursor-pointer transition-all duration-300 ease-in-out"
       />
       <img
         src="~/assets/tweets/tweet5.png"
         alt="testimonial"
-        class="w-full h-full object-cover border-2 border-gray-900 rounded-xl overflow-hidden shadow-md shadow-blue-400 rotate-2 hover:scale-[1.05] hover:rotate-0 hover:shadow-xl hover:shadow-blue-300 hover:z-50 cursor-pointer transition-all duration-300 ease-in-out"
+        class="w-full h-full object-cover border-2 border-gray-900 rounded-xl overflow-hidden shadow-md shadow-blue-400 rotate-2 hover:scale-[1.05] hover:rotate-0 hover:shadow-xl hover:shadow-blue-300 hover:z-10 cursor-pointer transition-all duration-300 ease-in-out"
       />
       <img
         src="~/assets/tweets/tweet6.png"
         alt="testimonial"
-        class="w-full h-full object-cover border-2 border-gray-900 rounded-xl overflow-hidden shadow-md shadow-blue-400 -rotate-6 hover:scale-[1.05] hover:rotate-0 hover:shadow-xl hover:shadow-blue-300 hover:z-50 cursor-pointer transition-all duration-300 ease-in-out"
+        class="w-full h-full object-cover border-2 border-gray-900 rounded-xl overflow-hidden shadow-md shadow-blue-400 -rotate-6 hover:scale-[1.05] hover:rotate-0 hover:shadow-xl hover:shadow-blue-300 hover:z-10 cursor-pointer transition-all duration-300 ease-in-out"
       />
     </div>
   </div>
@@ -167,8 +187,10 @@ function openAuthModal(authType) {
     <div
       class="bg-gradient-to-tr from-slate-600 to-gray-800 rounded-xl h-fit flex md:flex-row flex-col justify-center items-center md:gap-24 gap-2 md:px-16 px-8 py-6"
     >
-      <div class="md:w-2/3 w-full space-y-2 md:order-1 order-last ">
-        <h3 class="md:text-2xl text-lg font-bold font-synonym text-gray-100 md:text-start text-center ">
+      <div class="md:w-2/3 w-full space-y-2 md:order-1 order-last">
+        <h3
+          class="md:text-2xl text-lg font-bold font-synonym text-gray-100 md:text-start text-center"
+        >
           Open Source: Make It Your Own
         </h3>
         <p class="text-gray-300 md:text-start text-center line-clamp-2">
@@ -184,7 +206,9 @@ function openAuthModal(authType) {
           <IconsTarget class="h-5 w-5" />
         </a>
       </div>
-      <div class="md:w-1/3 w-full flex justify-center items-center md:order-last order-1">
+      <div
+        class="md:w-1/3 w-full flex justify-center items-center md:order-last order-1"
+      >
         <img
           src="~/assets/github.png"
           alt="github"
