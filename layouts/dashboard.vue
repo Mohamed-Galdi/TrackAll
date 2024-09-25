@@ -35,7 +35,7 @@ async function logout() {
       </div>
     </nav>
 
-    <div id="main" class="bg-slate-100 min-h-screen">
+    <div id="main" class="bg-gray-100 min-h-screen">
       <slot></slot>
     </div>
   </div>
