@@ -8,14 +8,21 @@ export default defineNuxtConfig({
     storageKey: 'nuxt-color-mode'
   },
   devtools: { enabled: true },
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/css/main.css',
+    '@/assets/theme/custom-theme.css',
+  ],
   modules: ['@nuxtjs/supabase', "@nuxt/ui",  '@primevue/nuxt-module'],
 
   primevue: {
         options: {
             theme: {
-                preset: Aura
-            }
+        preset: Aura,
+        options: {
+            prefix: 'p',
+            darkModeSelector: 'light',
+            cssLayer: false
+        }
+    }
         }
     },
 

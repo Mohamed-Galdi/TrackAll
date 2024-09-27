@@ -1,0 +1,20 @@
+:root {
+    --primary-color: rgb(166, 0, 255);
+    --primary-color-text: #ffffff;
+    /* Text color on primary background */
+}
+
+.p-fileupload .p-button {
+    background: black;
+    border: solid 1px white;
+}
+
+/* hover state */
+.p-fileupload:hover .p-button:hover {
+    background: #333;
+    border-color: #333;
+}
+
+.p-editor-toolbar {
+    display: none;
+}
