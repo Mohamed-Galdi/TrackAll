@@ -1,4 +1,5 @@
 <script setup>
+import Toast from 'primevue/toast';
 
 const user = useSupabaseUser();
 const supabase = useSupabaseClient();
@@ -16,6 +17,7 @@ async function logout() {
 </script>
 
 <template>
+    <Toast />
   <div class="">
     <nav class="h-16 flex justify-between items-center mx-auto max-w-screen-xl ">
       <NuxtLink to="/">

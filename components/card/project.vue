@@ -34,17 +34,25 @@ const humanReadableUpdatedDate = computed(() => {
 });
 
 const { techComponents } = useTechComponents();
+
+const router = useRouter();
+
+function goToProjectDetails() {
+  router.push(`/projects/${props.project.id}`);
+}
 </script>
 
 <template>
-  <div
+  <div @click="goToProjectDetails"
     class="bg-white border-2 border-gray-200 rounded-lg p-4 shadow-md h-82 cursor-pointer hover:shadow-sm hover:scale-[0.99] transition-all duration-300 ease-in-out"
   >
     <div class="flex justify-start items-center gap-4">
       <!-- Project Icon -->
       <div
-        class="min-w-16 h-16 bg-slate-300 rounded-md border border-white"
-      ></div>
+        class="min-w-16 h-16 bg-slate-300 rounded-md border border-white flex justify-center items-center"
+      >
+      <img v-if="project.logo" :src="project.logo" alt="Logo" class="w-14 h-14 rounded-sm object-cover bg-white">
+    </div>
       <div class="w-full">
         <!-- Project Name -->
         <h2 class="font-bold text-xl font-amulya text-slate-700 line-clamp-1">
@@ -74,7 +82,7 @@ const { techComponents } = useTechComponents();
 
       <!-- Project Progress -->
       <div class="w-1/3 grid place-items-center">
-        <CardProgress :total-tasks="3" :completed-tasks="1" class="w-full" />
+        <CardProgress :total-tasks="0" :completed-tasks="0" class="w-full" />
       </div>
     </div>
     <div>

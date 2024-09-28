@@ -1,7 +1,21 @@
 :root {
-    --primary-color: rgb(166, 0, 255);
+    --primary-color: #858dfb;
     --primary-color-text: #ffffff;
-    /* Text color on primary background */
+    --p-primary-50: #eef2ff;
+    --p-primary-100: #e0e7ff;
+    --p-primary-200: #c7d2fe;
+    --p-primary-300: #a5b4fc;
+    --p-primary-400: #818cf8;
+    --p-primary-500: #6366f1;
+    --p-primary-600: #4f46e5;
+    --p-primary-700: #4338ca;
+    --p-primary-800: #3730a3;
+    --p-primary-900: #312e81;
+    --p-primary-950: #1e1b4b;
+
+    --p-select-focus-border-color: #262626;
+    --p-multiselect-focus-border-color: #262626;
+    
 }
 
 .p-fileupload .p-button {
@@ -17,4 +31,16 @@
 
 .p-editor-toolbar {
     display: none;
+}
+
+.p-inputtext:enabled:focus {
+    border-color: #262626 !important;
+}
+
+.select.focus.border.color{
+    border-color: #262626 !important;
+}
+
+.p-tabpanels{
+    min-height: 600px;
 }

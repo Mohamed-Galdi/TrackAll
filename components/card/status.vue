@@ -71,7 +71,7 @@ const types = {
 
 
 // Dynamically select the current type based on the prop
-const currentType = types[props.type] || types.live; // Default to 'live' if type is not provided
+const currentType = types[props.type] || types.idea; // Default to 'idea' if type is not provided
 </script>
 
 <template>

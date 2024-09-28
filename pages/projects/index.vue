@@ -2,7 +2,6 @@
 import Dialog from "primevue/dialog";
 
 const supabase = useSupabaseClient();
-const router = useRouter();
 
 definePageMeta({
   middleware: ["auth"],
@@ -28,34 +27,25 @@ async function fetchProjects() {
     error.value = err.message;
     console.error("Fetch projects error:", error.value);
   } finally {
-    loading.value = false; // Set loading to false after data is fetched or error occurs
+    loading.value = false; 
   }
   // setTimeout(() => {
   //   loading.value = false;
   //   console.log(projects.value.length);
   // }, 1000);
 }
-
 onMounted(fetchProjects);
 
-async function logout() {
-  const { error: logoutError } = await supabase.auth.signOut();
-  if (logoutError) {
-    console.error("Logout error:", logoutError.message);
-  } else {
-    router.push("/");
-  }
-}
 
 const createProjectDialog = ref(false);
-
 const openCreateProjectDialog = () => {
   createProjectDialog.value = true;
 };
+
 </script>
 
 <template>
-  <div class="max-w-screen-xl mx-auto px-4 pb-8 pt-4">
+  <div class="max-w-screen-xl mx-auto px-4 pb-8 pt-8">
     <div class="flex justify-between items-center mb-4">
       <h1 class="text-2xl font-synonym">My Projects</h1>
       <div>
@@ -86,7 +76,7 @@ const openCreateProjectDialog = () => {
       </p>
       <button
         class="flex justify-center items-center gap-2 py-1 px-2 text-white rounded-md bg-indigo-600 hover:bg-indigo-700"
-        @click="navigateToCreateProject"
+        @click="openCreateProjectDialog"
       >
         <p>Create Your First Project</p>
         <IconsAdd class="w-4 h-4" />
@@ -112,7 +102,8 @@ const openCreateProjectDialog = () => {
     v-model:visible="createProjectDialog"
     modal
     header="Create New Project"
-    :style="{ width: '60%' }"
+    :style="{ width: '60%', backgroundColor: '#f5f5f5'}"
+    
   >
     <CardCreateProject />
   </Dialog>
