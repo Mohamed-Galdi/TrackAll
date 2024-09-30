@@ -1,16 +1,14 @@
 <script setup>
-import { useToast } from "primevue/usetoast";
-
+import { useToast } from "primevue/usetoast"; 
 
 const toast = useToast();
-const router = useRouter();
 
-const logoFile = ref(null);
-const logoPreview = ref(null);
-const name = ref(null);
-const selectedStatus = ref([]);
-const description = ref(null);
-const selectedTechs = ref([]);
+const props = defineProps({
+  project: {
+    type: Object,
+    required: true
+  }
+});
 
 const statuses = ref([
   { name: "💡 idea", value: "idea" },
@@ -21,6 +19,14 @@ const statuses = ref([
   { name: "🛠️ maintenance", value: "maintenance" },
   { name: "📅 planned", value: "planned" },
 ]);
+
+const logoFile = ref(null);
+const logoPreview = ref(props.project.logo);
+const name = ref(props.project.name);
+const selectedStatus = ref(statuses.value.find(s => s.value === props.project.status) || null);
+const selectedTechs = ref(props.project.tech_stack.map(tech => ({ name: tech })));
+const description = ref(props.project.description || '');
+
 
 const Techs = ref([
   { name: "nuxt" },
@@ -70,19 +76,6 @@ const Techs = ref([
   { name: "inertia" },
 ]);
 
-// Function to get a random default logo URL
-function getRandomDefaultLogo() {
-  const logoNumber = Math.floor(Math.random() * 7) + 1;
-  return supabase.storage
-    .from("logos")
-    .getPublicUrl(`defaultLogos/logo${logoNumber}.png`).data.publicUrl;
-}
-
-// Set a random default logo on component mount
-onMounted(() => {
-  logoPreview.value = getRandomDefaultLogo();
-});
-
 // Logo Selection Function
 function onFileSelect(event) {
   const file = event.target.files[0];
@@ -98,21 +91,33 @@ function onFileSelect(event) {
   reader.readAsDataURL(file);
 }
 
+// Rich Text Editor Config
+const editorModules = {
+  toolbar: [
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    [{ font: [] }],
+    [{ align: [] }],
+    ["bold", "italic", "underline", "strike"],
+    ["blockquote", "code-block"],
+    [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+    [{ color: [] }, { background: [] }],
+    ["clean"],
+  ],
+};
+
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 
-// Add a new ref for form submission status
 const submitting = ref(false);
 const errorMessage = ref("");
 
-// Add a new ref for form validation errors
 const validationErrors = ref({
   name: null,
   selectedTechs: null,
 });
 
-// Project creation function
-async function createProject() {
+// Project update function
+async function updateProject() {
   // Reset validation errors
   validationErrors.value = {
     name: null,
@@ -126,8 +131,7 @@ async function createProject() {
 
   // Simple validation for tech stack (at least one tech must be selected)
   if (selectedTechs.value.length === 0) {
-    validationErrors.value.selectedTechs =
-      "At least one technology must be selected.";
+    validationErrors.value.selectedTechs = "At least one technology must be selected.";
   }
 
   // If there are any validation errors, stop the submission
@@ -136,7 +140,7 @@ async function createProject() {
   }
 
   if (!user.value) {
-    alert("You must be logged in to create a project");
+    alert("You must be logged in to update a project");
     return;
   }
 
@@ -144,14 +148,25 @@ async function createProject() {
   errorMessage.value = "";
 
   try {
-    let logoUrl = null;
+    // Check if the project belongs to the authenticated user
+    const { data: projectData, error: projectError } = await supabase
+      .from('projects')
+      .select('user_id')
+      .eq('id', props.project.id)
+      .single();
 
-    // Upload logo if selected, otherwise use the random default logo
+    if (projectError) throw projectError;
+
+    if (projectData.user_id !== user.value.id) {
+      throw new Error("You don't have permission to update this project");
+    }
+
+    let logoUrl = props.project.logo;
+
+    // Upload new logo if selected
     if (logoFile.value) {
       const fileExt = logoFile.value.name.split(".").pop();
-      const fileName = `${name.value
-        .toLowerCase()
-        .replace(/\s+/g, "-")}-${Date.now()}.${fileExt}`;
+      const fileName = `${name.value.toLowerCase().replace(/\s+/g, "-")}-${Date.now()}.${fileExt}`;
       const filePath = `${user.value.id}/${fileName}`;
 
       let { error: uploadError } = await supabase.storage
@@ -162,66 +177,49 @@ async function createProject() {
         throw uploadError;
       }
 
-      const {
-        data: { publicUrl },
-        error: urlError,
-      } = supabase.storage.from("logos").getPublicUrl(filePath);
+      const { data: { publicUrl }, error: urlError } = supabase.storage
+        .from("logos")
+        .getPublicUrl(filePath);
 
       if (urlError) {
         throw urlError;
       }
 
       logoUrl = publicUrl;
-    } else {
-      // Use the current preview URL, which is either a user-selected image or a random default logo
-      logoUrl = logoPreview.value;
     }
+
+    // Prepare the updated tech stack
+    const updatedTechStack = selectedTechs.value.map(tech => tech.name);
 
     const { data, error } = await supabase
       .from("projects")
-      .insert({
-        user_id: user.value.id,
+      .update({
         name: name.value,
         logo: logoUrl,
         status: selectedStatus.value?.value,
         description: description.value,
-        tech_stack: selectedTechs.value.map((tech) => tech.name),
-        created_at: new Date().toISOString(),
+        tech_stack: updatedTechStack,
         updated_at: new Date().toISOString(),
       })
+      .eq('id', props.project.id)
       .select();
 
     if (error) throw error;
 
-    // Clear form after successful submission
-    logoFile.value = null;
-    logoPreview.value = getRandomDefaultLogo(); // Set a new random default logo
-    name.value = null;
-    selectedStatus.value = null;
-    description.value = null;
-    selectedTechs.value = [];
-
-    // console.log('Project created successfully:', data);
     toast.add({
       severity: "success",
       summary: "Success",
-      detail: "Project created successfully",
+      detail: "Project updated successfully",
       life: 3000,
     });
-    // Use router.go to force a reload of the current page
-    await router.push("/projects");
-    router.go();
+    window.location.reload();
   } catch (error) {
-    // console.error('Error creating project:', error);
     toast.add({
       severity: "error",
       summary: "Error",
-      detail: "Error creating project: " + error.message,
+      detail: "Error updating project: " + error.message,
       life: 3000,
     });
-    // Use router.go to force a reload of the current page
-    await router.push("/projects");
-    router.go();
   } finally {
     submitting.value = false;
   }
@@ -233,10 +231,7 @@ async function createProject() {
     <div class="flex w-full gap-2">
       <!-- Project Logo -->
       <div class="flex flex-col justify-center items-start w-1/6 relative">
-        <label
-          for="logo"
-          class="flex items-center gap-2 text-sm font-amulya ms-1"
-        >
+        <label for="logo" class="flex items-center gap-2 text-sm font-amulya ms-1">
           Logo <span class="text-xs font-light">(Optional)</span>
         </label>
         <div class="relative w-full sm:w-16 h-16 my-1">
@@ -264,19 +259,13 @@ async function createProject() {
       </div>
       <!-- Project Name -->
       <div class="flex flex-col w-3/6">
-        <label for="name" class="flex items-center gap-2 text-sm font-amulya"
-          >Name</label
-        >
+        <label for="name" class="flex items-center gap-2 text-sm font-amulya">Name</label>
         <InputText type="text" v-model="name" />
-        <small v-if="validationErrors.name" class="text-red-500">{{
-          validationErrors.name
-        }}</small>
+        <small v-if="validationErrors.name" class="text-red-500">{{ validationErrors.name }}</small>
       </div>
       <!-- Project Status -->
       <div class="w-2/6">
-        <label for="status" class="flex items-center gap-2 text-sm font-amulya"
-          >Status</label
-        >
+        <label for="status" class="flex items-center gap-2 text-sm font-amulya">Status</label>
         <Select
           v-model="selectedStatus"
           :options="statuses"
@@ -288,45 +277,37 @@ async function createProject() {
     </div>
     <!-- Project Description -->
     <div>
-      <label
-        for="description"
-        class="flex items-center gap-2 text-sm font-amulya ms-1"
-        >Description <span class="text-xs font-light">(Optional)</span></label
-      >
-      <div class="">
+      <label for="description" class="flex items-center gap-2 text-sm font-amulya ms-1">
+        Description <span class="text-xs font-light">(Optional)</span>
+      </label>
+      <div>
         <Textarea v-model="description" rows="5" cols="30" class="w-full" />
       </div>
     </div>
     <!-- Project Tech Stack -->
     <div class="w-full">
-      <label
-        for="techs"
-        class="flex items-center gap-2 text-sm font-amulya ms-1"
-        >Tech Stack</label
-      >
+      <label for="techs" class="flex items-center gap-2 text-sm font-amulya ms-1">Tech Stack</label>
       <MultiSelect
         v-model="selectedTechs"
         display="chip"
         :options="Techs"
         optionLabel="name"
         filter
-        placeholder="SelectTech Stack"
+        placeholder="Select Tech Stack"
         :maxSelectedLabels="8"
         class="w-full"
       />
-      <small v-if="validationErrors.selectedTechs" class="text-red-500">{{
-        validationErrors.selectedTechs
-      }}</small>
+      <small v-if="validationErrors.selectedTechs" class="text-red-500">
+        {{ validationErrors.selectedTechs }}
+      </small>
     </div>
-    <!-- Create Project Button -->
+    <!-- Update Project Button -->
     <div class="">
-      <BtnMain @click="createProject" :disabled="submitting">
-        {{ submitting ? "Creating..." : "Create Project" }}
+      <BtnMain @click="updateProject" :disabled="submitting">
+        {{ submitting ? "Updating..." : "Update Project" }}
       </BtnMain>
     </div>
     <!-- Error message display -->
     <small v-if="errorMessage" class="text-red-500">{{ errorMessage }}</small>
   </div>
 </template>
-
-<style scoped></style>

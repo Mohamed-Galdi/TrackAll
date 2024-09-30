@@ -1,6 +1,31 @@
 <script setup>
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+import Dialog from "primevue/dialog";
+
+definePageMeta({
+  middleware: ["auth"],
+  layout: "dashboard",
+});
+
+import ProjectDetails from "@/components/card/ProjectDetails.vue";
+import Tasks from "@/components/Tasks.vue";
+import Notes from "@/components/Notes.vue";
+
+const activeTab = ref("details");
+const setActiveTab = (tab) => {
+  activeTab.value = tab;
+};
+
+// Create an object with the actual component references
+const componentMap = {
+  details: ProjectDetails,
+  tasks: Tasks,
+  notes: Notes,
+};
+
+// Use computed property to get the correct component
+const currentComponent = computed(() => componentMap[activeTab.value]);
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -11,6 +36,27 @@ const supabase = useSupabaseClient();
 // get the project id from the url
 const projectId = route.params.id;
 
+// auth user
+const user = useSupabaseUser();
+const userId = user.value.id;
+
+// get the project from supabase
+const { data: project, error } = await useSupabaseClient()
+  .from("projects")
+  .select()
+  .eq("id", projectId)
+  .single();
+
+if (!project || project.user_id !== userId) {
+  router.push("/projects");
+}
+
+const updateProjectDialog = ref(false);
+const openUpdateProjectDialog = () => {
+  updateProjectDialog.value = true;
+};
+
+// delete the project
 const deleteProject = () => {
   confirm.require({
     message: "Do you want to delete this Project?",
@@ -46,7 +92,7 @@ const deleteProject = () => {
       toast.add({
         severity: "info",
         summary: "Confirmed",
-        detail: "Record deleted",
+        detail: "Project deleted",
         life: 3000,
       });
       await router.push("/projects");
@@ -54,79 +100,98 @@ const deleteProject = () => {
     reject: () => {},
   });
 };
-
-// ////////////////////////////
-definePageMeta({
-  middleware: ["auth"],
-  layout: "dashboard",
-});
-
-// get the project from supabase
-const { data: project, error } = await useSupabaseClient()
-  .from("projects")
-  .select()
-  .eq("id", projectId)
-  .single();
-
-if (error) {
-  console.error("Error fetching project:", error.message);
-}
 </script>
 
 <template>
   <Toast />
   <ConfirmDialog></ConfirmDialog>
-  <div class="max-w-screen-xl mx-auto px-4 pb-8 pt-8">
+  <div v-if="project" class="max-w-screen-xl mx-auto px-4 pb-8 pt-8">
     <!-- buttons -->
-    <div class="flex justify-between items-center mb-4">
+    <div class="flex justify-between items-center mb-8">
+      <!-- Back Button -->
       <div>
         <NuxtLink
           to="/projects"
           class="flex justify-center items-center gap-2 py-1 px-2 text-white rounded-md cursor-pointer bg-indigo-500 hover:bg-indigo-600 transition-all duration-300 ease-in-out"
         >
           <IconsArrow class="w-4 h-4" />
-          <p>Back to Projects</p>
+          <p>Projects</p>
         </NuxtLink>
       </div>
+
+      <!-- Tab Buttons -->
+      <div class="flex gap-4 px-4">
+        <button
+          class="p-1 w-24 rounded-md"
+          :class="{
+            'bg-indigo-200 text-indigo-800 border-indigo-400 border-2':
+              activeTab === 'details',
+            'bg-slate-50 text-slate-500 border border-slate-300 hover:bg-indigo-100 transition-all duration-300 ease-in-out':
+              activeTab !== 'details',
+          }"
+          @click="setActiveTab('details')"
+        >
+          Details
+        </button>
+        <button
+          class="p-1 w-24 rounded-md"
+          :class="{
+            'bg-indigo-200 text-indigo-800 border-indigo-400 border-2':
+              activeTab === 'tasks',
+            'bg-slate-50 text-slate-500 border border-slate-300 hover:bg-indigo-100 transition-all duration-300 ease-in-out':
+              activeTab !== 'tasks',
+          }"
+          @click="setActiveTab('tasks')"
+        >
+          Tasks
+        </button>
+        <button
+          class="p-1 w-24 rounded-md"
+          :class="{
+            'bg-indigo-200 text-indigo-800 border-indigo-400 border-2':
+              activeTab === 'notes',
+            'bg-slate-50 text-slate-500 border border-slate-300 hover:bg-indigo-100 transition-all duration-300 ease-in-out':
+              activeTab !== 'notes',
+          }"
+          @click="setActiveTab('notes')"
+        >
+          Notes
+        </button>
+      </div>
+
+      <!-- Edit/Delete Buttons -->
       <div class="flex gap-2">
         <button
+          @click="openUpdateProjectDialog"
           class="flex justify-center items-center gap-2 py-1 px-2 text-white rounded-md bg-[#efb900] hover:bg-[#e5a533] transition-all duration-300 ease-in-out"
         >
-          <p>Edit Project</p>
+          <p>Edit</p>
           <IconsEdit class="w-4 h-4" />
         </button>
         <button
           @click="deleteProject"
           class="flex justify-center items-center gap-2 py-1 px-2 text-white rounded-md bg-red-600 hover:bg-red-700 transition-all duration-300 ease-in-out"
         >
-          <p>Delete Project</p>
+          <p>Delete</p>
           <IconsDelete class="w-4 h-4" />
         </button>
       </div>
     </div>
 
     <!-- Tabs -->
-    <div>
-      <Tabs value="0">
-        <TabList>
-          <Tab value="0">Project Details</Tab>
-          <Tab value="1">Project Tasks</Tab>
-          <Tab value="2">Project Notes</Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel value="0">
-            <CardProjectDetails :project="project" />
-          </TabPanel>
-          <TabPanel value="1">
-            <p>Project Tasks</p>
-          </TabPanel>
-          <TabPanel value="2">
-            <p>Project Notes</p>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+    <div class="p-4">
+      <component :is="currentComponent" :project="project" />
     </div>
   </div>
+  <!-- Projects Creation Dialog -->
+  <Dialog
+    v-model:visible="updateProjectDialog"
+    modal
+    header="Update This Project"
+    :style="{ width: '60%', backgroundColor: '#f5f5f5' }"
+  >
+    <CardUpdateProject :project="project" />
+  </Dialog>
 </template>
 
 <style scoped></style>

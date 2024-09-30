@@ -43,7 +43,8 @@ function goToProjectDetails() {
 </script>
 
 <template>
-  <div @click="goToProjectDetails"
+  <div
+    @click="goToProjectDetails"
     class="bg-white border-2 border-gray-200 rounded-lg p-4 shadow-md h-82 cursor-pointer hover:shadow-sm hover:scale-[0.99] transition-all duration-300 ease-in-out"
   >
     <div class="flex justify-start items-center gap-4">
@@ -51,11 +52,16 @@ function goToProjectDetails() {
       <div
         class="min-w-16 h-16 bg-slate-300 rounded-md border border-white flex justify-center items-center"
       >
-      <img v-if="project.logo" :src="project.logo" alt="Logo" class="w-14 h-14 rounded-sm object-cover bg-white">
-    </div>
-      <div class="w-full">
+        <img
+          v-if="project.logo"
+          :src="project.logo"
+          alt="Logo"
+          class="w-14 h-14 rounded-sm object-cover bg-white"
+        />
+      </div>
+      <div class="w-60">
         <!-- Project Name -->
-        <h2 class="font-bold text-xl font-amulya text-slate-700 line-clamp-1">
+        <h2 class="font-bold text-xl font-amulya text-slate-700 line-clamp-1 truncate">
           {{ project.name }}
         </h2>
         <!-- Project Status -->

@@ -44,3 +44,12 @@
 .p-tabpanels{
     min-height: 600px;
 }
+
+.p-fieldset{
+    background-color: rgb(243 244 246) ;
+}
+.p-fieldset-legend{
+    border: solid 1px rgb(229 231 235);
+}
+
+@import 'primeicons/primeicons.css';
