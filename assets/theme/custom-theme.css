@@ -33,9 +33,9 @@
     display: none;
 }
 
-.p-inputtext:enabled:focus {
+/* .p-inputtext:enabled:focus {
     border-color: #262626 !important;
-}
+} */
 
 .select.focus.border.color{
     border-color: #262626 !important;
@@ -51,5 +51,3 @@
 .p-fieldset-legend{
     border: solid 1px rgb(229 231 235);
 }
-
-@import 'primeicons/primeicons.css';

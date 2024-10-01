@@ -17,9 +17,9 @@ const statuses = ref([
   { name: "💻 in_progress", value: "in_progress" },
   { name: "🏆 completed", value: "completed" },
   { name: "🌐 live", value: "live" },
-  { name: "⛔ cancelled", value: "cancelled" },
+  { name: "📝 needs_update", value: "needs_update" },
   { name: "🛠️ maintenance", value: "maintenance" },
-  { name: "📅 planned", value: "planned" },
+  { name: "⛔ cancelled", value: "cancelled" },
 ]);
 
 const Techs = ref([

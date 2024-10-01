@@ -6,7 +6,7 @@ const props = defineProps({
   },
 });
 
-const localType = ref(props.type); // Keep a local copy of the prop to switch between types
+const localType = ref(props.type);
 
 watch(() => props.type, (newType) => {
   localType.value = newType;
@@ -16,7 +16,7 @@ watch(() => props.type, (newType) => {
 
 <template>
   <div>
-    <component :is="localType" v-if="localType === 'login'">
+    <template v-if="localType === 'login'">
       <AuthLogin />
       <p class="mt-4">Don't have an account? 
         <span 
@@ -26,23 +26,19 @@ watch(() => props.type, (newType) => {
           Register
         </span>
       </p>
-    </component>
-
-    <component :is="localType" v-else-if="type === 'register'">
+    </template>
+    <template v-else-if="localType === 'register'">
       <AuthRegister />
       <p class="mt-4">Already have an account? 
-        <span 
+        <span P
           class="text-indigo-500 hover:text-indigo-600 cursor-pointer"
           @click="localType = 'login'"
         >
           Login
         </span>
       </p>
-    </component>
-    
-    <component :is="localType" v-else-if="type === 'demo'">
-      <AuthDemo />
-    </component>
+    </template>
+    <AuthDemo v-else-if="localType === 'demo'" />
   </div>
 </template>
 

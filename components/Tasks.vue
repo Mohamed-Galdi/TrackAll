@@ -34,6 +34,7 @@ onMounted(() => {
   fetchTasks();
 });
 
+const loading = ref(true);
 const fetchTasks = async () => {
   try {
     const { data, error } = await supabase
@@ -51,6 +52,8 @@ const fetchTasks = async () => {
       detail: "Error fetching tasks: " + error.message,
       life: 3000,
     });
+  } finally{
+    loading.value = false; 
   }
 };
 
@@ -172,7 +175,6 @@ const toggleTaskStatus = async (task , event) => {
 const taskDetailsDialog = ref(false);
 const taskDetails = ref({});
 const showTaskDetails = (task) => {
-  console.log("task details", task);
   taskDetails.value = task;
   taskDetailsDialog.value = true;
 };
@@ -248,7 +250,11 @@ const deleteTask = (task) => {
       </button>
     </div>
 
-    <div class="space-y-4">
+    <!-- Tasks List -->
+     <div v-if="loading" class="w-full">
+      <TasksSkeleton />
+    </div>
+    <div v-else class="space-y-4">
       <div v-if="openTasks.length > 0">
         <h3 class="font-semibold mb-2">Open Tasks</h3>
         <ul class="space-y-2">
@@ -321,11 +327,11 @@ const deleteTask = (task) => {
     :style="{ width: '90%', maxWidth: '600px', backgroundColor: '#f5f5f5' }"
     class=""
   >
-    <div class="space-y-4">
-      <p class="text-sm font-semibold ms-1"
+    <div class="space-y-3">
+      <p class="text-sm font-semibold ms-1 px-2 py-[2px] w-fit rounded-md"
         :class="{
-          'text-red-500': taskDetails.closed_at,
-          'text-green-600': !taskDetails.closed_at,
+          'text-red-500 bg-red-200 border border-red-400': taskDetails.closed_at,
+          'text-green-600 bg-green-200 border border-green-400': !taskDetails.closed_at,
         }">
         {{ taskDetails.closed_at ? "Closed" : "Open" }}
       </p>
@@ -334,15 +340,16 @@ const deleteTask = (task) => {
           {{ taskDetails.content }}
         </p>
       </div>
-      <div class="flex justify-start items-center gap-4 w-full ms-1">
-        <p class="text-sm font-semibold">Created: </p>
-        <p class="text-sm font-semibold">{{ useFormattedDate(taskDetails.created_at) }} </p>
-        <p class="text-sm font-semibold">({{ useHumanReadableDate(taskDetails.created_at) }}) </p>
+      <div class="flex justify-start items-center gap-2 w-full ms-1">
+        <p class="text-sm text-slate-500 font-semibold">Created: </p>
+        <div class="flex gap-1 items-center">
+          <p class="text-sm font-semibold">{{ useFormattedDate(taskDetails.created_at) }} </p>
+          <p class="text-sm font-semibold">({{ useHumanReadableDate(taskDetails.created_at) }}) </p>
+        </div>
       </div>
-      <div class="flex justify-start items-center gap-4 w-full ms-1">
-        <p class="text-sm font-semibold">Closed: </p>
-        
-        <div v-if="taskDetails.closed_at" class="flex justify-start items-center gap-4 w-full">
+      <div class="flex justify-start items-center gap-2 w-full ms-1">
+        <p class="text-sm text-slate-500 font-semibold">Closed: </p>
+        <div v-if="taskDetails.closed_at" class="flex justify-start items-center gap-1 w-full">
             <p class="text-sm font-semibold" >{{ useFormattedDate(taskDetails.closed_at) }} </p>
             <p class="text-sm font-semibold">({{ useHumanReadableDate(taskDetails.closed_at) }}) </p>
         </div>

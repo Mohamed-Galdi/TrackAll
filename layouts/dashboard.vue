@@ -1,25 +1,41 @@
 <script setup>
-import Toast from 'primevue/toast';
+import Toast from "primevue/toast";
 
 const user = useSupabaseUser();
 const supabase = useSupabaseClient();
 const router = useRouter();
+
+const userEmail = computed(() => user.value?.email);
 
 async function logout() {
   const { error: logoutError } = await supabase.auth.signOut();
   if (logoutError) {
     console.error("Logout error:", logoutError.message);
   } else {
-    router.push('/');
-    toast.add({ severity: 'success', summary: 'Success', detail: 'Logout successful', life: 3000 });
+    router.push("/");
+    toast.add({
+      severity: "success",
+      summary: "Success",
+      detail: "Logout successful",
+      life: 3000,
+    });
   }
 }
+const items = [
+  [
+    {
+      label: 'Logout',
+      icon: 'pi pi-sign-out',
+      click: () => logout(),
+    }
+  ]
+]
 </script>
 
 <template>
-    <Toast />
+  <Toast />
   <div class="">
-    <nav class="h-16 flex justify-between items-center mx-auto max-w-screen-xl ">
+    <nav class="h-16 flex justify-between items-center mx-auto max-w-screen-xl">
       <NuxtLink to="/">
         <img
           src="~/assets/logos/dark_trans.png"
@@ -27,8 +43,18 @@ async function logout() {
           class="max-w-[80px]"
         />
       </NuxtLink>
-      <div class="text-center">
-        <UButton color="black" variant="solid" @click="logout">Logout</UButton>
+      <div>
+        <UDropdown
+          :items="items"
+          mode="hover"
+          :popper="{ placement: 'bottom-start' }"
+        >
+          <UButton
+            color="white"
+            :label="userEmail"
+            trailing-icon="i-heroicons-chevron-down-20-solid"
+          />
+        </UDropdown>
       </div>
     </nav>
 

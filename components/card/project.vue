@@ -1,37 +1,9 @@
 <script setup>
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 
 const props = defineProps({
   project: Object,
 });
 
-// Extend dayjs with the relativeTime plugin
-dayjs.extend(relativeTime);
-
-const CreatedDate = computed(() => {
-  return props.project.created_at
-    ? dayjs(props.project.created_at).format("YYYY-MM-DD")
-    : "";
-});
-
-const humanReadableCreatedDate = computed(() => {
-  return props.project.created_at
-    ? dayjs(props.project.created_at).fromNow()
-    : "";
-});
-
-const UpdatedDate = computed(() => {
-  return props.project.updated_at
-    ? dayjs(props.project.updated_at).format("YYYY-MM-DD")
-    : "";
-});
-
-const humanReadableUpdatedDate = computed(() => {
-  return props.project.updated_at
-    ? dayjs(props.project.updated_at).fromNow()
-    : "";
-});
 
 const { techComponents } = useTechComponents();
 
@@ -62,7 +34,7 @@ function goToProjectDetails() {
       <div class="w-60">
         <!-- Project Name -->
         <h2 class="font-bold text-xl font-amulya text-slate-700 line-clamp-1 truncate">
-          {{ project.name }}
+          {{ useTextLimit(project.name, 20) }}
         </h2>
         <!-- Project Status -->
         <CardStatus :type="project.status" />
@@ -75,20 +47,20 @@ function goToProjectDetails() {
         <div class="rounded-lg">
           <p class="text-sm text-slate-400">created:</p>
           <p class="text-sm font-semibold text-slate-700">
-            {{ CreatedDate }} ({{ humanReadableCreatedDate }})
+            {{ useFormattedDate(project.created_at) }} ({{ useHumanReadableDate(project.created_at) }})
           </p>
         </div>
         <div class="rounded-lg">
           <p class="text-sm text-slate-400">Updated:</p>
           <p class="text-sm font-semibold text-slate-700">
-            {{ UpdatedDate }} ({{ humanReadableUpdatedDate }})
+             {{ useFormattedDate(project.updated_at) }} ({{ useHumanReadableDate(project.updated_at) }})
           </p>
         </div>
       </div>
 
       <!-- Project Progress -->
       <div class="w-1/3 grid place-items-center">
-        <CardProgress :total-tasks="0" :completed-tasks="0" class="w-full" />
+        <CardProgress :total-tasks="project.totalTasks" :completed-tasks="project.closedTasks" class="w-full" />
       </div>
     </div>
     <div>

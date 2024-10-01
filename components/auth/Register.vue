@@ -1,47 +1,47 @@
 <script setup lang="ts">
-import { object, string, type InferType } from "yup";
-import type { FormSubmitEvent } from "#ui/types";
+// import { object, string, type InferType } from "yup";
+// import type { FormSubmitEvent } from "#ui/types";
 
 const supabase = useSupabaseClient();
 
-const isLoading = ref(false);
+// const isLoading = ref(false);
 
-const state = reactive({
-  username: '',
-  email: '',
-  password: '',
-});
+// const state = reactive({
+//   username: '',
+//   email: '',
+//   password: '',
+// });
 
-const schema = object({
-  username: string().min(3, "Must be at least 3 characters").required("Required"),
-  email: string().email("Invalid email").required("Required"),
-  password: string()
-    .min(8, "Must be at least 8 characters")
-    .required("Required"),
-});
+// const schema = object({
+//   username: string().min(3, "Must be at least 3 characters").required("Required"),
+//   email: string().email("Invalid email").required("Required"),
+//   password: string()
+//     .min(8, "Must be at least 8 characters")
+//     .required("Required"),
+// });
 
-type Schema = InferType<typeof schema>;
+// type Schema = InferType<typeof schema>;
 
-async function onSubmit(event: FormSubmitEvent<Schema>) {
-  if (isLoading.value) return;
+// async function onSubmit(event: FormSubmitEvent<Schema>) {
+//   if (isLoading.value) return;
   
-  isLoading.value = true;
+//   isLoading.value = true;
   
-  const { data, error } = await supabase.auth.signUp({
-    email: state.email,
-    password: state.password
-  });
+//   const { data, error } = await supabase.auth.signUp({
+//     email: state.email,
+//     password: state.password
+//   });
   
   
-  isLoading.value = false;
+//   isLoading.value = false;
 
-  if (error) {
-    console.error("Sign-up error:", error.message);
-  } else {
-    console.log("Sign-up successful:", data);
-    navigateTo('/email-confirmation' )
-  }
-}
+//   if (error) {
+//     console.error("Sign-up error:", error.message);
+//   } else {
+//     console.log("Sign-up successful:", data);
+//     navigateTo('/email-confirmation' )
+//   }
+// }
 
 async function signInWithProvider(provider: 'google' | 'github') {
   const { data, error } = await supabase.auth.signInWithOAuth({
@@ -58,10 +58,10 @@ async function signInWithProvider(provider: 'google' | 'github') {
 
 <template>
   <div class="w-full text-center">
-    <h1 class="text-3xl font-bold">Register</h1>
+    <h1 class="text-3xl font-bold text-slate-600">Register</h1>
     <h2>Create a new account</h2>
   </div>
-  <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+  <!-- <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
 
     <UFormGroup label="Username" name="username">
       <UInput v-model="state.username" />
@@ -80,8 +80,8 @@ async function signInWithProvider(provider: 'google' | 'github') {
     <div class="h-[1.5px] w-full bg-slate-400 mt-1"></div>
     <p>or</p>
     <div class="h-[1.5px] w-full bg-slate-400 mt-1"></div>
-  </div>
-  <div class="space-y-2 flex flex-col items-center justify-center">
+  </div> -->
+  <div class="space-y-2 flex flex-col items-center justify-center mt-6">
     <button
       class="w-full mx-2 p-2 flex justify-center items-center gap-4 bg-slate-300/50 hover:bg-slate-300 rounded-lg"
       @click="signInWithProvider('google')"

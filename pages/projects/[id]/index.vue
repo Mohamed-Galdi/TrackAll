@@ -40,12 +40,71 @@ const projectId = route.params.id;
 const user = useSupabaseUser();
 const userId = user.value.id;
 
-// get the project from supabase
-const { data: project, error } = await useSupabaseClient()
-  .from("projects")
-  .select()
-  .eq("id", projectId)
-  .single();
+async function fetchProjectWithTaskCounts(projectId) {
+  try {
+    // Fetch the project by its ID
+    const { data: projectData, error: fetchProjectError } =
+      await useSupabaseClient()
+        .from("projects")
+        .select()
+        .eq("id", projectId)
+        .single();
+
+    if (fetchProjectError) {
+      throw fetchProjectError;
+    }
+
+    // Fetch the tasks related to this project
+    const { data: tasksData, error: fetchTasksError } =
+      await useSupabaseClient()
+        .from("tasks")
+        .select("id, project_id, closed_at")
+        .eq("project_id", projectId); // Get tasks specific to the project
+
+    if (fetchTasksError) {
+      throw fetchTasksError;
+    }
+
+    // Fetch notes related to this project
+    const { data: notesData, error: fetchNotesError } =
+      await useSupabaseClient()
+        .from("notes")
+        .select("id")
+        .eq("project_id", projectId); // Get notes specific to the project
+
+    if (fetchNotesError) {
+      throw fetchNotesError;
+    }
+
+    // Total notes
+    const totalNotes = notesData.length;
+
+    // Calculate total, open, and closed tasks
+    const totalTasks = tasksData.length;
+    const openTasks = tasksData.filter(
+      (task) => task.closed_at === null
+    ).length;
+    const closedTasks = tasksData.filter(
+      (task) => task.closed_at !== null
+    ).length;
+
+    // Add task counts to the project object
+    const projectWithTaskCounts = {
+      ...projectData,
+      totalTasks,
+      openTasks,
+      closedTasks,
+      totalNotes,
+    };
+
+    return projectWithTaskCounts;
+  } catch (err) {
+    console.error("Fetch project or tasks error:", err.message);
+    return null;
+  }
+}
+
+const project = await fetchProjectWithTaskCounts(projectId);
 
 if (!project || project.user_id !== userId) {
   router.push("/projects");
@@ -143,7 +202,7 @@ const deleteProject = () => {
           }"
           @click="setActiveTab('tasks')"
         >
-          Tasks
+          Tasks <span class="text-indigo-500 font-semibold"> ({{ project.openTasks }})</span>
         </button>
         <button
           class="p-1 w-24 rounded-md"
@@ -155,7 +214,7 @@ const deleteProject = () => {
           }"
           @click="setActiveTab('notes')"
         >
-          Notes
+          Notes <span class="text-indigo-500 font-semibold"> ({{ project.totalNotes }})</span>
         </button>
       </div>
 

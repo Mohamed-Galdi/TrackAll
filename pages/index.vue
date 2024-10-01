@@ -7,7 +7,7 @@ definePageMeta({
 
 const { overviewImage } = useImageTransform();
 
-const type = ref("getStarted");
+const type = ref("login");
 
 const isAuthOpen = ref(false);
 
