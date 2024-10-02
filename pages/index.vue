@@ -1,5 +1,7 @@
 <script setup>
-import githubGif from "~/assets/showcase/github.gif";
+import projectsVideo from "~/assets/showcase/projects.mp4";
+import tasksVideo from "~/assets/showcase/tasks.mp4";
+import notesVideo from "~/assets/showcase/notes.mp4";
 
 definePageMeta({
   layout: "home",
@@ -80,7 +82,7 @@ function openAuthModal(authType) {
 
       <div class="my-12 flex justify-center test lg:px-0 px-4">
         <img
-          src="~/assets/test.png"
+          src="~/assets/dashboard.png"
           alt="overview"
           ref="overviewImage"
           class="overview border-4 border-white z-10 rounded-xl shadow-primary shadow-2xl w-[1000px] transition-all duration-1000"
@@ -122,21 +124,21 @@ function openAuthModal(authType) {
     <div>
       <ShowCaseCart
         direction="ltr"
-        title="Title 1"
-        description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vitae libero ea fuga fugit neque, itaque voluptatibus dicta ipsam veritatis. Ad vitae blanditiis maiores! Distinctio!"
-        :image="githubGif"
+        title="Project Creation"
+        description="Start managing your projects with ease! Our platform allows you to create projects in just a few clicks, providing a streamlined way to organize your ideas and objectives. No more scattered notes—everything you need is right at your fingertips."
+        :video="projectsVideo"
       />
       <ShowCaseCart
         direction="rtl"
-        title="Title 2"
-        description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vitae libero ea fuga fugit neque, itaque voluptatibus dicta ipsam veritatis. Ad vitae blanditiis maiores! Distinctio!"
-        :image="githubGif"
+        title="Track Your Tasks"
+        description="Stay motivated by marking tasks as done once they’re completed. Our intuitive system helps you visualize your progress and celebrate milestones along the way. Every completed task brings you one step closer to your project goals!"
+        :video="tasksVideo"
       />
       <ShowCaseCart
         direction="ltr"
-        title="Title 3"
-        description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vitae libero ea fuga fugit neque, itaque voluptatibus dicta ipsam veritatis. Ad vitae blanditiis maiores! Distinctio!"
-        :image="githubGif"
+        title="Note Management"
+        description="Keep all your project notes organized in one place. Instead of juggling between Notion, notepads, and random papers, easily add and access your thoughts and ideas within your project. This centralized approach enhances clarity and ensures you never lose track of valuable insights."
+        :video="notesVideo"
       />
     </div>
   </div>

@@ -15,9 +15,9 @@ const statuses = ref([
   { name: "💻 in_progress", value: "in_progress" },
   { name: "🏆 completed", value: "completed" },
   { name: "🌐 live", value: "live" },
-  { name: "⛔ cancelled", value: "cancelled" },
+  { name: "📝 needs_update", value: "needs_update" },
   { name: "🛠️ maintenance", value: "maintenance" },
-  { name: "📅 planned", value: "planned" },
+  { name: "⛔ cancelled", value: "cancelled" },
 ]);
 
 const logoFile = ref(null);
@@ -91,20 +91,6 @@ function onFileSelect(event) {
   reader.readAsDataURL(file);
 }
 
-// Rich Text Editor Config
-const editorModules = {
-  toolbar: [
-    [{ header: [1, 2, 3, 4, 5, 6, false] }],
-    [{ font: [] }],
-    [{ align: [] }],
-    ["bold", "italic", "underline", "strike"],
-    ["blockquote", "code-block"],
-    [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-    [{ color: [] }, { background: [] }],
-    ["clean"],
-  ],
-};
-
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 
@@ -116,6 +102,16 @@ const validationErrors = ref({
   selectedTechs: null,
 });
 
+// List of default project IDs
+const defaultProjectIds = [
+  "061417d1-dd84-4df4-adcd-800384e7acdb", // EcoTrack
+  "43b62111-9fa5-4631-a794-94fad5d1f0d4", // CryptoPortal
+  "8af3d439-dacd-4fdb-80ee-0982cd8db7db", // TechTrove
+  "5252ad64-41fe-482c-8f8a-db8e687135f7", // LinguaLink
+  "be95b0d3-6849-4e70-be1d-7b9205d134a2", // MindfulMe
+  "57d3c2c5-1efb-4eeb-b374-c1f57979136c", // SoundScape
+];
+
 // Project update function
 async function updateProject() {
   // Reset validation errors
@@ -123,6 +119,17 @@ async function updateProject() {
     name: null,
     selectedTechs: null,
   };
+
+   // Check if the project is a default project
+  if (defaultProjectIds.includes(props.project.id)) {
+    toast.add({
+      severity: "warn",
+      summary: "Warning",
+      detail: "You can't update the default projects",
+      life: 3000,
+    });
+    return; // Exit the function if it's a default project
+  }
 
   // Simple validation for project name
   if (!name.value) {
