@@ -40,6 +40,15 @@ const types = {
     darkText: "text-green-300",
     emoji: "🌐",
   },
+  needs_update: {
+    label: "Needs Update",
+    bg: "bg-cyan-100",
+    text: "text-cyan-800",
+    border: "border-cyan-400",
+    darkBg: "bg-cyan-900",
+    darkText: "text-cyan-300",
+    emoji: "📝", // Represents a document or a note
+  },
   cancelled: {
     label: "Cancelled",
     bg: "bg-red-100",

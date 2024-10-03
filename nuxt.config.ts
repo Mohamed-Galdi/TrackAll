@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: true },
   css: ['~/assets/css/main.css',
-    '@/assets/theme/custom-theme.css',
+    '~/assets/theme/custom-theme.css',
     'primeicons/primeicons.css',
   ],
   modules: ['@nuxtjs/supabase', "@nuxt/ui",  '@primevue/nuxt-module'],
