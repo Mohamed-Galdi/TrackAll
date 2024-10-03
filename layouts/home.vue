@@ -85,7 +85,7 @@ const user = useSupabaseUser(); // Get the current user
 
     <div
       id="footer"
-      class="w-full bg-gradient-to-t from-blue-200 to-white pb-4"
+      class="w-full bg-slate-200/50"
     >
       <div
         class="mx-auto max-w-screen-xl py-8 px-10 font-amulya flex md:flex-row flex-col justify-between items-center text-center md:gap-0 gap-3"
@@ -95,28 +95,28 @@ const user = useSupabaseUser(); // Get the current user
         >
           <a href="https://github.com/Mohamed-Galdi" target="_blank">
             <IconsGithub
-              class="w-8 h-8 text-slate-800 hover:text-indigo-500 transition-all duration-300 ease-in-out"
+              class="w-6 h-6 text-slate-800 hover:text-indigo-500 hover:scale-[1.1] transition-all duration-300 ease-in-out "
             />
           </a>
           <a href="https://x.com/GaldiMohamed" target="_blank">
             <IconsTwitter
-              class="w-8 h-8 text-slate-800 hover:text-indigo-500 transition-all duration-300 ease-in-out"
+              class="w-6 h-6 text-slate-800 hover:text-indigo-500 hover:scale-[1.1] transition-all duration-300 ease-in-out"
             />
           </a>
           <a href="https://www.galdi.dev/" target="_blank">
             <IconsPortfolio
-              class="w-9 h-9 text-slate-800 hover:text-indigo-500 transition-all duration-300 ease-in-out"
+              class="w-7 h-7 text-slate-800 hover:text-indigo-500 hover:scale-[1.1] transition-all duration-300 ease-in-out"
             />
           </a>
         </div>
 
         <div class="md:w-1/3 w-full text-center order-1 md:order-2">
           <p class="font-synonym">
-            Made by
+            Made with ☕ by
             <a
               href="https://www.galdi.dev/"
               target="_blank"
-              class="text-slate-800 font-bold"
+              class="text-slate-800 font-semibold hover:font-bold  hover:text-indigo-500"
               >M-Galdi</a
             >
           </p>
