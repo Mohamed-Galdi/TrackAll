@@ -37,7 +37,7 @@ export function useTechComponents() {
     typescript: defineAsyncComponent(() =>
       import("@/components/Tech/Typescript.vue")
     ),
-    go: defineAsyncComponent(() => import("@/components/Tech/Go.vue")),
+    go: defineAsyncComponent( () => import("@/components/Tech/Go.vue")),
     docker: defineAsyncComponent(() => import("@/components/Tech/Docker.vue")),
     wordpress: defineAsyncComponent(() =>
       import("@/components/Tech/Wordpress.vue")
