@@ -1,6 +1,19 @@
 <script setup>
 import Toast from "primevue/toast";
 
+useHead({
+  title: "TrackAll - track your side projects",
+  meta: [
+    { charset: "utf-8" },
+    { name: "viewport", content: "width=device-width, initial-scale=1" },
+    {
+      hid: "description",
+      name: "description",
+      content: "Track your side projects with ease",
+    },
+  ]
+});
+
 const user = useSupabaseUser();
 const supabase = useSupabaseClient();
 const router = useRouter();
