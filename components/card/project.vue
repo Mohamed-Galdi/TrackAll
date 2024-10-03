@@ -17,7 +17,7 @@ function goToProjectDetails() {
 <template>
   <div
     @click="goToProjectDetails"
-    class="bg-white border-2 border-gray-200 rounded-lg p-4 shadow-md h-82 cursor-pointer hover:shadow-sm hover:scale-[0.99] transition-all duration-300 ease-in-out overflow-x-scroll"
+    class="bg-white border-2 border-gray-200 rounded-lg p-4 shadow-md h-82 cursor-pointer hover:shadow-sm hover:scale-[0.99] transition-all duration-300 ease-in-out md:overflow-x-hidden overflow-x-auto"
   >
     <div class="flex justify-start items-center gap-4">
       <!-- Project Icon -->

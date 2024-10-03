@@ -213,7 +213,9 @@ const deleteNote = (note) => {
 </script>
 
 <template>
-  <div class="bg-white p-6 rounded-lg border border-gray-300 shadow-sm overflow-x-scroll">
+  <div
+    class="bg-white p-6 rounded-lg border border-gray-300 shadow-sm md:overflow-x-hidden overflow-x-auto"
+  >
     <div class="flex justify-between items-center gap-4 mb-4">
       <p class="text-xl font-semibold">Notes</p>
       <button
@@ -232,11 +234,11 @@ const deleteNote = (note) => {
     </div>
     <div v-else class="space-y-4">
       <div v-if="notes.length > 0">
-        <ul class="grid md:grid-cols-3 grid-cols-1 gap-4 mt-4 ">
+        <ul class="grid md:grid-cols-3 grid-cols-1 gap-4 mt-4">
           <li
             v-for="note in notes"
             :key="note.id"
-            class="flex items-center gap-2 bg-slate-100 p-2 rounded text-slate-600 border border-slate-300 h-44 shadow-sm overflow-x-scroll"
+            class="flex items-center gap-2 bg-slate-100 p-2 rounded text-slate-600 border border-slate-300 h-44 shadow-sm md:overflow-x-hidden overflow-x-auto"
           >
             <div
               @click="showNoteDetails(note)"
@@ -251,9 +253,7 @@ const deleteNote = (note) => {
                 <div class="h-[1px] w-full bg-slate-200"></div>
               </div>
 
-              <div
-                class="flex flex-col justify-start items-stretch h-full p-1"
-              >
+              <div class="flex flex-col justify-start items-stretch h-full p-1">
                 <p class="line-clamp-4 text-sm">
                   {{ useTextLimit(note.content, 250) }}
                 </p>
@@ -327,7 +327,13 @@ const deleteNote = (note) => {
         placeholder="Note title"
         @keyup.enter="createNote"
       />
-      <Textarea v-model="noteContent" placeholder="Note content" rows="3" cols="30" class="w-full" />
+      <Textarea
+        v-model="noteContent"
+        placeholder="Note content"
+        rows="3"
+        cols="30"
+        class="w-full"
+      />
       <button
         @click="createNote"
         class="w-full text-center text-white bg-indigo-500 hover:bg-indigo-600 rounded-md py-2 px-4 transition-colors duration-200"

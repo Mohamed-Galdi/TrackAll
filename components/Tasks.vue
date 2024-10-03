@@ -52,8 +52,8 @@ const fetchTasks = async () => {
       detail: "Error fetching tasks: " + error.message,
       life: 3000,
     });
-  } finally{
-    loading.value = false; 
+  } finally {
+    loading.value = false;
   }
 };
 
@@ -140,7 +140,7 @@ const createTask = async () => {
   }
 };
 
-const toggleTaskStatus = async (task , event) => {
+const toggleTaskStatus = async (task, event) => {
   try {
     const updatedTask = {
       ...task,
@@ -237,7 +237,9 @@ const deleteTask = (task) => {
 </script>
 
 <template>
-  <div class="bg-white p-6 rounded-lg border border-gray-300 shadow-sm overflow-x-scroll">
+  <div
+    class="bg-white p-6 rounded-lg border border-gray-300 shadow-sm md:overflow-x-hidden overflow-x-auto"
+  >
     <div class="flex justify-between items-center gap-4 mb-4">
       <p class="text-xl font-semibold">Tasks</p>
       <button
@@ -251,7 +253,7 @@ const deleteTask = (task) => {
     </div>
 
     <!-- Tasks List -->
-     <div v-if="loading" class="w-full">
+    <div v-if="loading" class="w-full">
       <TasksSkeleton />
     </div>
     <div v-else class="space-y-4">
@@ -259,22 +261,20 @@ const deleteTask = (task) => {
         <h3 class="font-semibold mb-2">Open Tasks</h3>
         <ul class="space-y-2">
           <li
-           
             v-for="task in openTasks"
             :key="task.id"
-            class="flex items-center gap-2 bg-indigo-400 p-2 rounded text-slate-100 overflow-x-scroll"
+            class="flex items-center gap-2 bg-indigo-400 p-2 rounded text-slate-100 md:overflow-x-hidden overflow-x-auto"
           >
             <input
               type="checkbox"
               :checked="false"
-              
               @change="toggleTaskStatus(task, event)"
               class="form-checkbox h-5 w-5 text-indigo-600"
             />
-            <div  @click="showTaskDetails(task)" class=" w-full cursor-pointer">
-                <p class="text-nowrap truncate line-clamp-1">{{
-                  useTextLimit(task.content, 80)
-                }}</p>
+            <div @click="showTaskDetails(task)" class="w-full cursor-pointer">
+              <p class="text-nowrap truncate line-clamp-1">
+                {{ useTextLimit(task.content, 80) }}
+              </p>
             </div>
             <button
               @click="deleteTask(task)"
@@ -289,10 +289,10 @@ const deleteTask = (task) => {
       <div v-if="closedTasks.length > 0">
         <h3 class="font-semibold mb-2">Completed Tasks</h3>
         <ul class="space-y-2">
-          <li  
+          <li
             v-for="task in closedTasks"
             :key="task.id"
-            class="flex items-center gap-2 bg-gray-300 p-2 rounded text-slate-800 overflow-x-scroll"
+            class="flex items-center gap-2 bg-gray-300 p-2 rounded text-slate-800 md:overflow-x-hidden overflow-x-auto"
           >
             <input
               type="checkbox"
@@ -300,11 +300,11 @@ const deleteTask = (task) => {
               @change="toggleTaskStatus(task)"
               class="form-checkbox h-5 w-5 text-indigo-600"
             />
-           <div @click="showTaskDetails(task)" class=" w-full cursor-pointer">
-                <p class="line-through text-nowrap truncate line-clamp-1">{{
-                  useTextLimit(task.content, 80)
-                }}</p>
-           </div>
+            <div @click="showTaskDetails(task)" class="w-full cursor-pointer">
+              <p class="line-through text-nowrap truncate line-clamp-1">
+                {{ useTextLimit(task.content, 80) }}
+              </p>
+            </div>
             <button
               @click="deleteTask(task)"
               class="ml-auto text-gray-500 hover:text-red-500 transition-all duration-300 ease-in-out"
@@ -328,11 +328,15 @@ const deleteTask = (task) => {
     class=""
   >
     <div class="space-y-3">
-      <p class="text-sm font-semibold ms-1 px-2 py-[2px] w-fit rounded-md"
+      <p
+        class="text-sm font-semibold ms-1 px-2 py-[2px] w-fit rounded-md"
         :class="{
-          'text-red-500 bg-red-200 border border-red-400': taskDetails.closed_at,
-          'text-green-600 bg-green-200 border border-green-400': !taskDetails.closed_at,
-        }">
+          'text-red-500 bg-red-200 border border-red-400':
+            taskDetails.closed_at,
+          'text-green-600 bg-green-200 border border-green-400':
+            !taskDetails.closed_at,
+        }"
+      >
         {{ taskDetails.closed_at ? "Closed" : "Open" }}
       </p>
       <div class="bg-slate-200 p-2 rounded-md">
@@ -341,23 +345,33 @@ const deleteTask = (task) => {
         </p>
       </div>
       <div class="flex justify-start items-center gap-2 w-full ms-1">
-        <p class="text-sm text-slate-500 font-semibold">Created: </p>
+        <p class="text-sm text-slate-500 font-semibold">Created:</p>
         <div class="flex gap-1 items-center">
-          <p class="text-sm font-semibold">{{ useFormattedDate(taskDetails.created_at) }} </p>
-          <p class="text-sm font-semibold">({{ useHumanReadableDate(taskDetails.created_at) }}) </p>
+          <p class="text-sm font-semibold">
+            {{ useFormattedDate(taskDetails.created_at) }}
+          </p>
+          <p class="text-sm font-semibold">
+            ({{ useHumanReadableDate(taskDetails.created_at) }})
+          </p>
         </div>
       </div>
       <div class="flex justify-start items-center gap-2 w-full ms-1">
-        <p class="text-sm text-slate-500 font-semibold">Closed: </p>
-        <div v-if="taskDetails.closed_at" class="flex justify-start items-center gap-1 w-full">
-            <p class="text-sm font-semibold" >{{ useFormattedDate(taskDetails.closed_at) }} </p>
-            <p class="text-sm font-semibold">({{ useHumanReadableDate(taskDetails.closed_at) }}) </p>
+        <p class="text-sm text-slate-500 font-semibold">Closed:</p>
+        <div
+          v-if="taskDetails.closed_at"
+          class="flex justify-start items-center gap-1 w-full"
+        >
+          <p class="text-sm font-semibold">
+            {{ useFormattedDate(taskDetails.closed_at) }}
+          </p>
+          <p class="text-sm font-semibold">
+            ({{ useHumanReadableDate(taskDetails.closed_at) }})
+          </p>
         </div>
         <div v-else>
-            <p class="text-sm font-semibold">No Closed Yet</p>
+          <p class="text-sm font-semibold">No Closed Yet</p>
         </div>
       </div>
-      
     </div>
   </Dialog>
 

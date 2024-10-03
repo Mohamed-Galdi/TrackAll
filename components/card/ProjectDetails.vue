@@ -7,7 +7,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="bg-white p-6 rounded-lg border border-gray-300 shadow-sm overflow-x-scroll">
+  <div class="bg-white p-6 rounded-lg border border-gray-300 shadow-sm md:overflow-x-hidden overflow-x-auto">
     <div class="flex md:flex-row flex-col justify-start md:items-center gap-4">
 
       <!-- Logo and Name -->
