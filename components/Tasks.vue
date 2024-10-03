@@ -237,7 +237,7 @@ const deleteTask = (task) => {
 </script>
 
 <template>
-  <div class="bg-white p-6 rounded-lg border border-gray-300 shadow-sm">
+  <div class="bg-white p-6 rounded-lg border border-gray-300 shadow-sm overflow-x-scroll">
     <div class="flex justify-between items-center gap-4 mb-4">
       <p class="text-xl font-semibold">Tasks</p>
       <button
@@ -245,7 +245,7 @@ const deleteTask = (task) => {
         class="flex justify-center items-center gap-2 p-2 rounded-md bg-indigo-500 text-white hover:bg-indigo-600 transition-colors duration-200"
         :disabled="!canAddTask"
       >
-        <p>Add Task</p>
+        <p class="md:text-base text-sm">Add Task</p>
         <IconsAddTask class="w-4 h-4" />
       </button>
     </div>
@@ -262,7 +262,7 @@ const deleteTask = (task) => {
            
             v-for="task in openTasks"
             :key="task.id"
-            class="flex items-center gap-2 bg-indigo-400 p-2 rounded text-slate-100"
+            class="flex items-center gap-2 bg-indigo-400 p-2 rounded text-slate-100 overflow-x-scroll"
           >
             <input
               type="checkbox"
@@ -292,7 +292,7 @@ const deleteTask = (task) => {
           <li  
             v-for="task in closedTasks"
             :key="task.id"
-            class="flex items-center gap-2 bg-gray-300 p-2 rounded text-slate-800"
+            class="flex items-center gap-2 bg-gray-300 p-2 rounded text-slate-800 overflow-x-scroll"
           >
             <input
               type="checkbox"

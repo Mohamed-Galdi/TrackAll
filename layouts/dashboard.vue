@@ -35,7 +35,7 @@ const items = [
 <template>
   <Toast />
   <div class="">
-    <nav class="h-16 flex justify-between items-center mx-auto max-w-screen-xl">
+    <nav class="h-16  px-4 flex justify-between items-center mx-auto max-w-screen-xl">
       <NuxtLink to="/">
         <img
           src="~/assets/logos/dark_trans.png"

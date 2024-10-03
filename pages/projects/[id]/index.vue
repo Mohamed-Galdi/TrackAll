@@ -187,20 +187,20 @@ const deleteProject = () => {
   <ConfirmDialog></ConfirmDialog>
   <div v-if="project" class="max-w-screen-xl mx-auto px-4 pb-8 pt-8">
     <!-- buttons -->
-    <div class="flex justify-between items-center mb-8">
+    <div class="flex flex-wrap justify-between items-center mb-8 w-full">
       <!-- Back Button -->
-      <div>
+      <div class="w-1/2 md:w-auto order-1 md:order-1 ">
         <NuxtLink
           to="/projects"
-          class="flex justify-center items-center gap-2 py-1 px-2 text-white rounded-md cursor-pointer bg-indigo-500 hover:bg-indigo-600 transition-all duration-300 ease-in-out"
+          class="flex justify-center items-center w-fit gap-2 py-1 px-2 text-white rounded-md cursor-pointer bg-indigo-500 hover:bg-indigo-600 transition-all duration-300 ease-in-out"
         >
           <IconsArrow class="w-4 h-4" />
-          <p>Projects</p>
+          <p class="md:block hidden">Projects</p>
         </NuxtLink>
       </div>
 
       <!-- Tab Buttons -->
-      <div class="flex gap-4 px-4">
+      <div class="flex justify-center flex-wrap gap-4 px-4 w-full text-center mt-4 md:mt-0 md:w-auto order-3 md:order-2">
         <button
           class="p-1 w-24 rounded-md"
           :class="{
@@ -240,19 +240,19 @@ const deleteProject = () => {
       </div>
 
       <!-- Edit/Delete Buttons -->
-      <div class="flex gap-2">
+      <div class="flex justify-end gap-2 w-1/2 md:w-auto md:order-3 order-2">
         <button
           @click="openUpdateProjectDialog"
           class="flex justify-center items-center gap-2 py-1 px-2 text-white rounded-md bg-[#efb900] hover:bg-[#e5a533] transition-all duration-300 ease-in-out"
         >
-          <p>Edit</p>
+          <p class="md:block hidden">Edit</p>
           <IconsEdit class="w-4 h-4" />
         </button>
         <button
           @click="deleteProject"
-          class="flex justify-center items-center gap-2 py-1 px-2 text-white rounded-md bg-red-600 hover:bg-red-700 transition-all duration-300 ease-in-out"
+          class="flex justify-center items-center gap-2 py-1 px-2  text-white rounded-md bg-red-600 hover:bg-red-700 transition-all duration-300 ease-in-out "
         >
-          <p>Delete</p>
+          <p class="md:block hidden">Delete</p>
           <IconsDelete class="w-4 h-4" />
         </button>
       </div>

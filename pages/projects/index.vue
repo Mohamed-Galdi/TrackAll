@@ -137,7 +137,7 @@ const statusOptions = [
 
     <!-- Filters -->
     <div
-      class="flex justify-start items-start gap-4 mt-8"
+      class="flex flex-wrap justify-start items-start gap-4 mt-8 "
     >
       <div class="w-fit">
         <label
@@ -192,7 +192,7 @@ const statusOptions = [
     </div>
 
     <!-- Projects -->
-    <div v-if="loading" class="grid grid-cols-3 gap-8 mt-6">
+    <div v-if="loading" class="grid lg:grid-cols-3 grid-cols-1 gap-8 mt-6">
       <CardProjectSkeleton />
       <CardProjectSkeleton />
       <CardProjectSkeleton />
@@ -221,7 +221,7 @@ const statusOptions = [
     </div>
 
     <!-- Show the projects if they exist -->
-    <div v-else class="grid grid-cols-3 gap-8 mt-6">
+    <div v-else class="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8 mt-6">
       <CardProject
         v-for="project in projects"
         :key="project.id"

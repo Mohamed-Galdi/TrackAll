@@ -213,7 +213,7 @@ const deleteNote = (note) => {
 </script>
 
 <template>
-  <div class="bg-white p-6 rounded-lg border border-gray-300 shadow-sm">
+  <div class="bg-white p-6 rounded-lg border border-gray-300 shadow-sm overflow-x-scroll">
     <div class="flex justify-between items-center gap-4 mb-4">
       <p class="text-xl font-semibold">Notes</p>
       <button
@@ -221,7 +221,7 @@ const deleteNote = (note) => {
         class="flex justify-center items-center gap-2 p-2 rounded-md bg-indigo-500 text-white hover:bg-indigo-600 transition-colors duration-200"
         :disabled="!canAddNote"
       >
-        <p>Add Note</p>
+        <p class="md:text-base text-sm">Add Note</p>
         <IconsAddTask class="w-4 h-4" />
       </button>
     </div>
@@ -232,11 +232,11 @@ const deleteNote = (note) => {
     </div>
     <div v-else class="space-y-4">
       <div v-if="notes.length > 0">
-        <ul class="grid grid-cols-3 gap-4 mt-4">
+        <ul class="grid md:grid-cols-3 grid-cols-1 gap-4 mt-4 ">
           <li
             v-for="note in notes"
             :key="note.id"
-            class="flex items-center gap-2 bg-slate-100 p-2 rounded text-slate-600 border border-slate-300 h-44 shadow-sm"
+            class="flex items-center gap-2 bg-slate-100 p-2 rounded text-slate-600 border border-slate-300 h-44 shadow-sm overflow-x-scroll"
           >
             <div
               @click="showNoteDetails(note)"

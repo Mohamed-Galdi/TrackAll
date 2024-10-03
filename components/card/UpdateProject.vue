@@ -235,9 +235,9 @@ async function updateProject() {
 
 <template>
   <div class="p-2 space-y-8">
-    <div class="flex w-full gap-2">
+    <div class="flex lg:flex-row flex-col w-full gap-2">
       <!-- Project Logo -->
-      <div class="flex flex-col justify-center items-start w-1/6 relative">
+      <div class="flex flex-col justify-center items-start lg:w-1/6 w-fit relative">
         <label for="logo" class="flex items-center gap-2 text-sm font-amulya ms-1">
           Logo <span class="text-xs font-light">(Optional)</span>
         </label>
@@ -265,13 +265,13 @@ async function updateProject() {
         />
       </div>
       <!-- Project Name -->
-      <div class="flex flex-col w-3/6">
+      <div class="flex flex-col lg:w-3/6 w-full">
         <label for="name" class="flex items-center gap-2 text-sm font-amulya">Name</label>
         <InputText type="text" v-model="name" />
         <small v-if="validationErrors.name" class="text-red-500">{{ validationErrors.name }}</small>
       </div>
       <!-- Project Status -->
-      <div class="w-2/6">
+      <div class="lg:w-2/6 w-full ">
         <label for="status" class="flex items-center gap-2 text-sm font-amulya">Status</label>
         <Select
           v-model="selectedStatus"

@@ -42,7 +42,7 @@ function openAuthModal(authType) {
     class="bg-slate-100 text-dark font-amulya bg-[linear-gradient(to_right,#5968ee15_1px,transparent_1px),linear-gradient(to_bottom,#5968ee15_1px,transparent_1px)] bg-[size:24px_24px]"
   >
     <div
-      class="mx-auto max-w-screen-xl flex flex-col justify-center items-center pt-24"
+      class="mx-auto max-w-screen-xl flex flex-col justify-center items-center pt-24 space-y-12"
     >
       <h1
         class="lg:text-6xl md:text-5xl text-4xl font-bold text-center capitalize text-slate-700"

@@ -10,7 +10,7 @@ export function useImageTransform() {
         entries.forEach((entry) => {
           if (
             entry.isIntersecting &&
-            entry.intersectionRatio >= 0.8 &&
+            entry.intersectionRatio >= 0.99 &&
             !isTransformed
           ) {
             // Apply transformation once when 80% is visible
@@ -21,7 +21,7 @@ export function useImageTransform() {
         });
       },
       {
-        threshold: [0.8], // Trigger when 80% of the image is visible
+        threshold: [0.99], // Trigger when 80% of the image is visible
       }
     );
 
