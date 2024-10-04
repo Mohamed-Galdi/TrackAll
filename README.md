@@ -1,75 +1,93 @@
-# Nuxt 3 Minimal Starter
+# TrackALL - Simplify Your Project Tracking
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+![project screenshot](gh-screenshot.png)
 
-## Setup
+[![Live Demo](https://img.shields.io/badge/Live_Demo-TrackALL-green.svg)](https://track-all-eta.vercel.app/projects)  
 
-Make sure to install the dependencies:
+Open-source | Built with ☕ using Nuxt, Supabase, and TailwindCSS
+
+## ✨ Overview
+
+TrackALL is a simple and intuitive platform for managing your side projects, tasks, and notes—all in one place. Whether you’re a solo developer or working with a team, TrackALL gives you the clarity you need to stay on top of things without the overwhelming complexity of other project management tools.
+
+I built TrackALL to practice **Vue** and **Nuxt**, and to create a lightweight solution to track my own projects. The result is a free, open-source tool that’s perfect for developers who just want to focus on building, not managing complex workflows.
+
+## 🌟 Features
+
+- **Effortless Project Creation**: Quickly set up your projects with just a few clicks.
+- **Task Tracking**: Create tasks, assign deadlines, and mark them as done once completed.
+- **Note Management**: Add project notes to centralize ideas, feedback, and insights in one place.
+- **Simple, Not Overwhelming**: Unlike other tools, TrackALL is designed to keep you focused on your projects, not the process.
+
+## 💻 Tech Stack
+
+- **Nuxt 3** - Frontend framework based on Vue.js, providing SSR, static site generation, and more.
+- **Supabase** - Backend as a service for authentication and database management.
+- **Tailwind CSS** - Utility-first CSS framework for building custom designs.
+- **PrimeVue** - Feature-rich UI component library for Vue applications.
+- **NuxtUI** - A clean, modern UI library for building interactive and responsive interfaces.
+
+## 🚀 Live Demo
+
+You can check out the live version of TrackALL on Vercel:  
+🔗 [TrackALL - Live Demo](https://track-all-eta.vercel.app/projects)
+
+## 🛠️ Getting Started
+
+### Prerequisites
+
+- Node.js (version 14 or higher)
+- NPM or Yarn
+
+### Installation
+
+1. **Clone the repo**
+```bash
+git clone https://github.com/your-username/trackall.git
+```
+2. **Navigate to the project directory**
 
 ```bash
-# npm
+cd trackall
+```
+
+3. **Install dependencies**  
+
+Using NPM:
+
+```bash
 npm install
+```
 
-# pnpm
-pnpm install
+Or using Yarn:
 
-# yarn
+```bash
 yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+4. **Set up environment variables**  
+   Add your Supabase credentials and other necessary environment variables in a `.env` file.
 
-Start the development server on `http://localhost:3000`:
+5. **Run the development server**
 
 ```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+The app will be running at `http://localhost:3000`.
 
-Build the application for production:
+## 🤝 Contributing
 
-```bash
-# npm
-npm run build
+TrackALL is open-source and contributions are welcome! If you’d like to report issues, suggest improvements, or add new features, feel free to fork the repo and submit a pull request.
 
-# pnpm
-pnpm run build
+### How to contribute:
 
-# yarn
-yarn build
+1. Fork the repository.
+2. Create your feature branch (`git checkout -b feature/my-feature`).
+3. Commit your changes (`git commit -m 'Add some feature'`).
+4. Push to the branch (`git push origin feature/my-feature`).
+5. Open a pull request.
 
-# bun
-bun run build
-```
+## 📝 License
 
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+This project is licensed under the [MIT License](https://mit-license.org/) - see the LICENSE file for details.
