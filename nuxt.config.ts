@@ -8,9 +8,10 @@ export default defineNuxtConfig({
     storageKey: 'nuxt-color-mode'
   },
   devtools: { enabled: true },
-  css: ['~/assets/css/main.css',
-    '~/assets/theme/custom-theme.css',
+  css: [
     'primeicons/primeicons.css',
+    '~/assets/css/main.css',
+    '~/assets/theme/custom.css',
   ],
   modules: ['@nuxtjs/supabase', "@nuxt/ui",  '@primevue/nuxt-module'],
 
