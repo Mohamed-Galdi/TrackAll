@@ -1,5 +1,6 @@
 // composables/useTechComponents.js
 import { defineAsyncComponent } from "vue";
+import Firebase from "~/components/Tech/Firebase.vue";
 
 export function useTechComponents() {
   const techComponents = {
@@ -73,6 +74,17 @@ export function useTechComponents() {
     ),
     inertia: defineAsyncComponent(() =>
       import("@/components/Tech/Inertia.vue")
+    ),
+    firebase: defineAsyncComponent(() =>
+      import("@/components/Tech/Firebase.vue")
+    ),
+    framer: defineAsyncComponent(() => import("@/components/Tech/Framer.vue")),
+    htmx: defineAsyncComponent(() => import("@/components/Tech/Htmx.vue")),
+    supabase: defineAsyncComponent(() =>
+      import("@/components/Tech/Supabase.vue")
+    ),
+    filament: defineAsyncComponent(() =>
+      import("@/components/Tech/Filament.vue")
     ),
   };
 
