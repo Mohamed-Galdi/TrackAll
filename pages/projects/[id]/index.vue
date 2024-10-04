@@ -189,7 +189,7 @@ const deleteProject = () => {
     <!-- buttons -->
     <div class="flex flex-wrap justify-between items-center mb-8 w-full">
       <!-- Back Button -->
-      <div class="w-1/2 md:w-auto order-1 md:order-1 ">
+      <div class="w-1/2 md:w-auto order-1 md:order-1">
         <NuxtLink
           to="/projects"
           class="flex justify-center items-center w-fit gap-2 py-1 px-2 text-white rounded-md cursor-pointer bg-indigo-500 hover:bg-indigo-600 transition-all duration-300 ease-in-out"
@@ -200,7 +200,9 @@ const deleteProject = () => {
       </div>
 
       <!-- Tab Buttons -->
-      <div class="flex justify-center flex-wrap gap-4 px-4 w-full text-center mt-4 md:mt-0 md:w-auto order-3 md:order-2">
+      <div
+        class="flex justify-center flex-wrap gap-4 px-4 w-full text-center mt-4 md:mt-0 md:w-auto order-3 md:order-2"
+      >
         <button
           class="p-1 w-24 rounded-md"
           :class="{
@@ -223,7 +225,10 @@ const deleteProject = () => {
           }"
           @click="setActiveTab('tasks')"
         >
-          Tasks <span class="text-indigo-500 font-semibold"> ({{ project.openTasks }})</span>
+          Tasks
+          <span class="text-indigo-500 font-semibold">
+            ({{ project.openTasks }})</span
+          >
         </button>
         <button
           class="p-1 w-24 rounded-md"
@@ -235,7 +240,10 @@ const deleteProject = () => {
           }"
           @click="setActiveTab('notes')"
         >
-          Notes <span class="text-indigo-500 font-semibold"> ({{ project.totalNotes }})</span>
+          Notes
+          <span class="text-indigo-500 font-semibold">
+            ({{ project.totalNotes }})</span
+          >
         </button>
       </div>
 
@@ -250,7 +258,7 @@ const deleteProject = () => {
         </button>
         <button
           @click="deleteProject"
-          class="flex justify-center items-center gap-2 py-1 px-2  text-white rounded-md bg-red-600 hover:bg-red-700 transition-all duration-300 ease-in-out "
+          class="flex justify-center items-center gap-2 py-1 px-2 text-white rounded-md bg-red-600 hover:bg-red-700 transition-all duration-300 ease-in-out"
         >
           <p class="md:block hidden">Delete</p>
           <IconsDelete class="w-4 h-4" />
@@ -263,12 +271,13 @@ const deleteProject = () => {
       <component :is="currentComponent" :project="project" />
     </div>
   </div>
-  <!-- Projects Creation Dialog -->
+  <!-- Projects Update Dialog -->
   <Dialog
     v-model:visible="updateProjectDialog"
     modal
+    class="w-[90%] md:w-[60%]"
     header="Update This Project"
-    :style="{ width: '60%', backgroundColor: '#f5f5f5' }"
+    :style="{ backgroundColor: '#f5f5f5' }"
   >
     <CardUpdateProject :project="project" />
   </Dialog>

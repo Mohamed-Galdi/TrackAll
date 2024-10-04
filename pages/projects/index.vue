@@ -234,7 +234,8 @@ const statusOptions = [
     v-model:visible="createProjectDialog"
     modal
     header="Create New Project"
-    :style="{ width: '60%', backgroundColor: '#f5f5f5' }"
+    class="w-[90%] md:w-[60%]"
+    :style="{ backgroundColor: '#f5f5f5' }"
   >
     <CardCreateProject />
   </Dialog>
