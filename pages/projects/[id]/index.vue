@@ -154,7 +154,7 @@ const deleteProject = () => {
     },
     accept: async () => {
       // Delete the project from the database
-      console.log(projectId);
+      // console.log(projectId);
       const { error: deleteError } = await supabase
         .from("projects")
         .delete()

@@ -145,6 +145,6 @@ const user = useSupabaseUser(); // Get the current user
 
 <style scoped>
 #header {
-  border-bottom: 1px solid rgba(79, 70, 229, 0.2); /* Adjust the color and opacity as needed */
+  border-bottom: 1px solid rgba(79, 70, 229, 0.2); 
 }
 </style>
