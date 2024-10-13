@@ -104,9 +104,9 @@ async function fetchProjectWithTaskCounts(projectId) {
   }
 }
 
-const project = await fetchProjectWithTaskCounts(projectId);
+const project = ref(await fetchProjectWithTaskCounts(projectId));
 
-if (!project || project.user_id !== userId) {
+if (!project.value || project.value.user_id !== userId) {
   router.push("/projects");
 }
 
@@ -179,6 +179,11 @@ const deleteProject = () => {
     },
     reject: () => {},
   });
+};
+
+// Refresh the project data
+const refreshProjectData = async () => {
+  project.value = await fetchProjectWithTaskCounts(projectId);
 };
 </script>
 
@@ -268,7 +273,12 @@ const deleteProject = () => {
 
     <!-- Tabs -->
     <div class="p-4">
-      <component :is="currentComponent" :project="project" />
+      <component
+        :is="currentComponent"
+        :project="project"
+        @task-updated="refreshProjectData"
+        @note-updated="refreshProjectData"
+      />
     </div>
   </div>
   <!-- Projects Update Dialog -->

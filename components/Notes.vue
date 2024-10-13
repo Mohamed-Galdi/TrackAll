@@ -13,6 +13,8 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(['note-updated']);
+
 const noteTitle = ref("");
 const noteContent = ref("");
 const addNoteDialog = ref(false);
@@ -130,6 +132,7 @@ const createNote = async () => {
       detail: "Note created successfully",
       life: 3000,
     });
+    emit('note-updated');
     noteTitle.value = "";
     noteContent.value = "";
     addNoteDialog.value = false;
@@ -190,6 +193,7 @@ const deleteNote = (note) => {
           detail: "Note deleted successfully",
           life: 3000,
         });
+        emit('note-updated');
       } catch (error) {
         toast.add({
           severity: "error",

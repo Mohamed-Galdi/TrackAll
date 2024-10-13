@@ -13,6 +13,8 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(['task-updated']);
+
 
 const taskContent = ref("");
 const addTaskDialog = ref(false);
@@ -134,6 +136,7 @@ const createTask = async () => {
     taskContent.value = "";
     addTaskDialog.value = false;
     await fetchTasks();
+    emit('task-updated');
   } catch (error) {
     toast.add({
       severity: "error",
@@ -222,6 +225,7 @@ const deleteTask = (task) => {
           detail: "Task deleted successfully",
           life: 3000,
         });
+        emit('task-updated');
       } catch (error) {
         toast.add({
           severity: "error",
