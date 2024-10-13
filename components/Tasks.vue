@@ -172,6 +172,7 @@ const toggleTaskStatus = async (task, event) => {
       detail: `Task ${task.closed_at ? "reopened" : "marked as done"}`,
       life: 3000,
     });
+    emit('task-updated');
   } catch (error) {
     toast.add({
       severity: "error",
