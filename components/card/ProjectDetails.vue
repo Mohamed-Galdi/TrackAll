@@ -31,6 +31,12 @@ const props = defineProps({
           >
             {{ useTextLimit(props.project.name, 20) }}
           </h2>
+          <!-- Project Live Link -->
+          <div v-if="props.project.live_link" class="w-fit">
+            <a :href="props.project.live_link" target="_blank" class="text-slate-400 text-sm font-semibold mb-1 hover:underline">
+              {{ useTextLimit(props.project.live_link, 20) }}
+            </a>
+          </div>
           <!-- Project Status -->
           <CardStatus :type="props.project.status" />
         </div>

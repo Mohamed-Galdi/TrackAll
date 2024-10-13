@@ -30,7 +30,10 @@ const strokeDashOffset = computed(() => {
       <svg class="w-full h-full" viewBox="0 0 100 100">
         <!-- Background circle -->
         <circle
-          class="text-slate-200 stroke-current"
+          :class="[
+            totalTasks === 0 && completedTasks === 0 ? 'text-slate-500' : 'text-slate-200',
+            'stroke-current'
+          ]"
           stroke-width="10"
           cx="50"
           cy="50"

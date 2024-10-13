@@ -23,6 +23,7 @@ const statuses = ref([
 const logoFile = ref(null);
 const logoPreview = ref(props.project.logo);
 const name = ref(props.project.name);
+const liveLink = ref(props.project.live_link || '');
 const selectedStatus = ref(statuses.value.find(s => s.value === props.project.status) || null);
 const selectedTechs = ref(props.project.tech_stack.map(tech => ({ name: tech })));
 const description = ref(props.project.description || '');
@@ -157,6 +158,7 @@ async function updateProject() {
       .update({
         name: name.value,
         logo: logoUrl,
+        live_link: liveLink.value,
         status: selectedStatus.value?.value,
         description: description.value,
         tech_stack: updatedTechStack,
@@ -191,7 +193,7 @@ async function updateProject() {
   <div class="p-2 space-y-8">
     <div class="flex lg:flex-row flex-col w-full gap-2">
       <!-- Project Logo -->
-      <div class="flex flex-col justify-center items-start lg:w-1/6 w-fit relative">
+      <div class="flex flex-col justify-center items-start lg:w-1/8 w-fit relative">
         <label for="logo" class="flex items-center gap-2 text-sm font-amulya ms-1">
           Logo <span class="text-xs font-light">(Optional)</span>
         </label>
@@ -219,13 +221,18 @@ async function updateProject() {
         />
       </div>
       <!-- Project Name -->
-      <div class="flex flex-col lg:w-3/6 w-full">
+      <div class="flex flex-col lg:w-3/8 w-full">
         <label for="name" class="flex items-center gap-2 text-sm font-amulya">Name</label>
         <InputText type="text" v-model="name" />
         <small v-if="validationErrors.name" class="text-red-500">{{ validationErrors.name }}</small>
       </div>
+      <!-- Project Live Link -->
+      <div class="flex flex-col lg:w-3/8 w-full">
+        <label for="liveLink" class="flex items-center gap-2 text-sm font-amulya">Live Link <span class="text-xs font-light">(Optional)</span></label>
+        <InputText v-model="liveLink" />
+      </div>
       <!-- Project Status -->
-      <div class="lg:w-2/6 w-full ">
+      <div class="flex flex-col lg:w-3/8 w-full">
         <label for="status" class="flex items-center gap-2 text-sm font-amulya">Status</label>
         <Select
           v-model="selectedStatus"

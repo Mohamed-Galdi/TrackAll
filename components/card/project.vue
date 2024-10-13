@@ -1,9 +1,7 @@
 <script setup>
-
 const props = defineProps({
   project: Object,
 });
-
 
 const { techComponents } = useTechComponents();
 
@@ -33,11 +31,23 @@ function goToProjectDetails() {
       </div>
       <div class="w-60">
         <!-- Project Name -->
-        <h2 class="font-bold text-xl font-amulya text-slate-700 line-clamp-1 truncate">
+        <h2
+          class="font-bold text-xl font-amulya text-slate-700 line-clamp-1 truncate"
+        >
           {{ useTextLimit(project.name, 20) }}
         </h2>
         <!-- Project Status -->
         <CardStatus :type="project.status" />
+      </div>
+      <!-- Project Live Link -->
+      <div v-if="project.live_link" class="w-fit h-16">
+        <a
+          :href="project.live_link"
+          target="_blank"
+          class="text-slate-500 hover:text-slate-700 group "
+        >
+          <iconsTarget class="w-4 h-4 group-hover:scale-110 transition-all duration-300 ease-in-out"  />
+        </a>
       </div>
     </div>
 
@@ -47,20 +57,28 @@ function goToProjectDetails() {
         <div class="rounded-lg">
           <p class="text-sm text-slate-400">created:</p>
           <p class="text-sm font-semibold text-slate-700">
-            {{ useFormattedDate(project.created_at) }} ({{ useHumanReadableDate(project.created_at) }})
+            {{ useFormattedDate(project.created_at) }} ({{
+              useHumanReadableDate(project.created_at)
+            }})
           </p>
         </div>
         <div class="rounded-lg">
           <p class="text-sm text-slate-400">Updated:</p>
           <p class="text-sm font-semibold text-slate-700">
-             {{ useFormattedDate(project.updated_at) }} ({{ useHumanReadableDate(project.updated_at) }})
+            {{ useFormattedDate(project.updated_at) }} ({{
+              useHumanReadableDate(project.updated_at)
+            }})
           </p>
         </div>
       </div>
 
       <!-- Project Progress -->
       <div class="w-1/3 grid place-items-center">
-        <CardProgress :total-tasks="project.totalTasks" :completed-tasks="project.closedTasks" class="w-full" />
+        <CardProgress
+          :total-tasks="project.totalTasks"
+          :completed-tasks="project.closedTasks"
+          class="w-full"
+        />
       </div>
     </div>
     <div>

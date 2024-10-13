@@ -13,6 +13,7 @@ const props = defineProps({
   },
 });
 
+
 const taskContent = ref("");
 const addTaskDialog = ref(false);
 const isSubmitting = ref(false);
@@ -25,6 +26,7 @@ const canAddTask = computed(() => {
   return user.value && props.project.user_id === user.value.id;
 });
 
+
 const openTasks = computed(() => tasks.value.filter((task) => !task.closed_at));
 const closedTasks = computed(() =>
   tasks.value.filter((task) => task.closed_at)
@@ -33,6 +35,7 @@ const closedTasks = computed(() =>
 onMounted(() => {
   fetchTasks();
 });
+
 
 const loading = ref(true);
 const fetchTasks = async () => {
@@ -57,6 +60,7 @@ const fetchTasks = async () => {
   }
 };
 
+
 const updateProjectTimestamp = async () => {
   try {
     const { error } = await supabase
@@ -70,6 +74,7 @@ const updateProjectTimestamp = async () => {
   }
 };
 
+
 const openAddTaskDialog = () => {
   if (!canAddTask.value) {
     toast.add({
@@ -82,6 +87,7 @@ const openAddTaskDialog = () => {
   }
   addTaskDialog.value = true;
 };
+
 
 const createTask = async () => {
   if (taskContent.value.trim() === "") {
@@ -140,6 +146,7 @@ const createTask = async () => {
   }
 };
 
+
 const toggleTaskStatus = async (task, event) => {
   try {
     const updatedTask = {
@@ -171,6 +178,7 @@ const toggleTaskStatus = async (task, event) => {
     });
   }
 };
+
 
 const taskDetailsDialog = ref(false);
 const taskDetails = ref({});
@@ -258,7 +266,7 @@ const deleteTask = (task) => {
     </div>
     <div v-else class="space-y-4">
       <div v-if="openTasks.length > 0">
-        <h3 class="font-semibold mb-2">Open Tasks</h3>
+        <h3 class="font-semibold mb-2 ">Open Tasks</h3>
         <ul class="space-y-2">
           <li
             v-for="task in openTasks"
@@ -269,7 +277,7 @@ const deleteTask = (task) => {
               type="checkbox"
               :checked="false"
               @change="toggleTaskStatus(task, event)"
-              class="form-checkbox h-5 w-5 text-indigo-600"
+              class="form-checkbox h-8 w-8 rounded text-indigo-600 border-slate-400 border-2 hover:bg-blue-200 cursor-pointer"
             />
             <div @click="showTaskDetails(task)" class="w-full cursor-pointer">
               <p class="text-nowrap truncate line-clamp-1">
@@ -298,7 +306,7 @@ const deleteTask = (task) => {
               type="checkbox"
               :checked="true"
               @change="toggleTaskStatus(task)"
-              class="form-checkbox h-5 w-5 text-indigo-600"
+              class="form-checkbox h-8 w-8 rounded text-indigo-600 border-slate-400 border-2 hover:bg-blue-200 cursor-pointer"
             />
             <div @click="showTaskDetails(task)" class="w-full cursor-pointer">
               <p class="line-through text-nowrap truncate line-clamp-1">

@@ -8,6 +8,7 @@ const router = useRouter();
 const logoFile = ref(null);
 const logoPreview = ref(null);
 const name = ref(null);
+const liveLink = ref('');
 const selectedStatus = ref([]);
 const description = ref(null);
 const selectedTechs = ref([]);
@@ -137,6 +138,7 @@ async function createProject() {
         user_id: user.value.id,
         name: name.value,
         logo: logoUrl,
+        live_link: liveLink.value,
         status: selectedStatus.value?.value,
         description: description.value,
         tech_stack: selectedTechs.value.map((tech) => tech.name),
@@ -151,6 +153,7 @@ async function createProject() {
     logoFile.value = null;
     logoPreview.value = getRandomDefaultLogo(); // Set a new random default logo
     name.value = null;
+    liveLink.value = '';
     selectedStatus.value = null;
     description.value = null;
     selectedTechs.value = [];
@@ -184,9 +187,9 @@ async function createProject() {
 
 <template>
   <div class="p-2 space-y-8">
-    <div class="flex lg:flex-row flex-col  w-full gap-2">
+    <div class="flex lg:flex-row flex-col  w-full gap-2 items-center">
       <!-- Project Logo -->
-      <div class="flex flex-col justify-center items-start lg:w-1/6 w-fit relative">
+      <div class="flex flex-col justify-center items-start lg:w-1/8 w-fit relative">
         <label
           for="logo"
           class="flex items-center gap-2 text-sm font-amulya ms-1"
@@ -217,7 +220,7 @@ async function createProject() {
         />
       </div>
       <!-- Project Name -->
-      <div class="flex flex-col lg:w-3/6 w-full">
+      <div class="flex flex-col lg:w-3/8 w-full">
         <label for="name" class="flex items-center gap-2 text-sm font-amulya"
           >Name</label
         >
@@ -226,8 +229,13 @@ async function createProject() {
           validationErrors.name
         }}</small>
       </div>
+      <!-- Project Live Link -->
+      <div class="flex flex-col lg:w-3/8 w-full">
+        <label for="liveLink" class="flex items-center gap-2 text-sm font-amulya">Live Link <span class="text-xs font-light">(Optional)</span></label>
+        <InputText v-model="liveLink" />
+      </div>
       <!-- Project Status -->
-      <div class="lg:w-2/6 w-full">
+      <div class="lg:w-3/8 w-full">
         <label for="status" class="flex items-center gap-2 text-sm font-amulya"
           >Status</label
         >
@@ -240,6 +248,7 @@ async function createProject() {
         />
       </div>
     </div>
+   
     <!-- Project Description -->
     <div>
       <label
