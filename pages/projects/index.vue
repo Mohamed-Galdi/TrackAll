@@ -148,10 +148,7 @@ const statusOptions = [
   <div class="max-w-screen-xl mx-auto px-4 pb-4 pt-8">
     <div class="flex justify-between items-center mb-4">
       <h1 class="text-2xl font-synonym">
-        My Projects
-        {{
-          projects.length && projects.length > 0 ? `(${projects.length})` : ""
-        }}
+        My Projects {{ totalProjects > 0 ? `(${totalProjects})` : '' }}
       </h1>
       <div>
         <button
