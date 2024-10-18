@@ -230,7 +230,21 @@ const statusOptions = [
       v-else-if="totalProjects === 0"
       class="mt-12 flex flex-col items-center justify-center gap-6"
     >
-      <!-- ... (existing "no projects" message) ... -->
+      <p class="text-2xl text-slate-500 font-synonym">
+        You don't have any projects yet. Create one now!
+      </p>
+      <button
+        class="flex justify-center items-center gap-2 py-1 px-2 text-white rounded-md bg-indigo-600 hover:bg-indigo-700"
+        @click="openCreateProjectDialog"
+      >
+        <p>Create Your First Project</p>
+        <IconsAdd class="w-4 h-4" />
+      </button>
+      <img
+        src="~/assets/empty.png"
+        class="w-1/4"
+        alt="no projects illustration"
+      />
     </div>
 
     <!-- Show the projects if they exist -->
