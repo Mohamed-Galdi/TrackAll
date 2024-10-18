@@ -123,7 +123,7 @@ const statusOptions = [
 <template>
   <div class="max-w-screen-xl mx-auto px-4 pb-4 pt-8">
     <div class="flex justify-between items-center mb-4">
-      <h1 class="text-2xl font-synonym">My Projects</h1>
+      <h1 class="text-2xl font-synonym">My Projects {{ projects.length && projects.length > 0 ? `(${projects.length})` : '' }}</h1>
       <div>
         <button
           class="flex justify-center items-center gap-2 py-1 px-2 text-white rounded-md bg-indigo-600 hover:bg-indigo-700"
